@@ -30,9 +30,9 @@ public class MongoDBProvider {
             mongoClient = new MongoClient(new MongoClientURI(mongouri));
         }
 
-        MongoDatabase database = mongoClient.getDatabase("TNTTag");
+        MongoDatabase database = mongoClient.getDatabase("VNStaff");
 
-        this.collection = database.getCollection("user_stats");
+        this.collection = database.getCollection("users");
     }
 
     public SessionStorage loadSessionStorage(String name, UUID uuid) {
