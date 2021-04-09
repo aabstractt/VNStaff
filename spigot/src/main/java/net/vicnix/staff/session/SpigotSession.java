@@ -31,6 +31,15 @@ public class SpigotSession extends Session {
     }
 
     @Override
+    public void teleportTo(Session session) {
+        Player instance = this.getInstance();
+
+        if (instance == null) return;
+
+        instance.teleport(((SpigotSession) session).getInstance());
+    }
+
+    @Override
     public void sendMessage(String message) {
         this.getInstance().sendMessage(ChatColor.translateAlternateColorCodes('&', message));
     }

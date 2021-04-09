@@ -20,7 +20,7 @@ public class SpigotVanishCommand implements CommandExecutor {
             session = SessionManager.getInstance().getSession(((Player) sender).getUniqueId());
         }
 
-        CommandManager.getInstance().executeCommand(session, label, args);
+        CommandManager.getInstance().executeCommand(session, "vanish", args);
 
         return false;
     }

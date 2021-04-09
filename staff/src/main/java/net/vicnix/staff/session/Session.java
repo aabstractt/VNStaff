@@ -18,6 +18,8 @@ public abstract class Session {
         this.sessionStorage = MongoDBProvider.getInstance().loadSessionStorage(this.sessionStorage.getName(), this.sessionStorage.getUniqueId());
     }
 
+    public abstract void teleportTo(Session session);
+
     public abstract void sendMessage(String message);
 
     public abstract void setDefaultAttributes();
