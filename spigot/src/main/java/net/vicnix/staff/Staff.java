@@ -1,6 +1,7 @@
 package net.vicnix.staff;
 
 import net.vicnix.staff.command.SpigotLocateTeleportCommand;
+import net.vicnix.staff.command.SpigotRestartCommand;
 import net.vicnix.staff.command.SpigotVanishCommand;
 import net.vicnix.staff.listener.PlayerJoinListener;
 import net.vicnix.staff.listener.PlayerQuitListener;
@@ -35,7 +36,12 @@ public class Staff extends JavaPlugin {
 
         this.getServer().getPluginCommand("vanish").setExecutor(new SpigotVanishCommand());
         this.getServer().getPluginCommand("stp").setExecutor(new SpigotLocateTeleportCommand());
+        this.getServer().getPluginCommand("devrestart").setExecutor(new SpigotRestartCommand());
 
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff commands loaded"));
+    }
+
+    public Boolean canDevAccess() {
+        return this.getConfig().getBoolean("dev-access", true);
     }
 }

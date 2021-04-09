@@ -8,3 +8,5 @@ commands:
     description: "Vanish command"
   stp:
     description: "Locate a player and go to he"
+  devrestart:
+    description: "Reiniciar el servidor (Solo usar para actualizar si es que un owner no actualiza)"
