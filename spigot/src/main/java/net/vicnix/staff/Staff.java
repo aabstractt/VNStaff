@@ -19,6 +19,9 @@ public class Staff extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        this.saveConfig();
+        this.getConfig().options().copyDefaults(true);
+
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&9&lVNStaff is starting"));
 
         MongoDBProvider.getInstance().init(this.getConfig().getString("mongouri", null));
@@ -31,6 +34,8 @@ public class Staff extends JavaPlugin {
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff listeners loaded"));
 
         this.getServer().getPluginCommand("vanish").setExecutor(new SpigotVanishCommand());
-        this.getServer().getPluginCommand("ltp").setExecutor(new SpigotLocateTeleportCommand());
+        this.getServer().getPluginCommand("stp").setExecutor(new SpigotLocateTeleportCommand());
+
+        this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff commands loaded"));
     }
 }

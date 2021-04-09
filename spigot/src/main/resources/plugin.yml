@@ -6,5 +6,5 @@ main: net.vicnix.staff.Staff
 commands:
   vanish:
     description: "Vanish command"
-  ltp:
+  stp:
     description: "Locate a player and go to he"

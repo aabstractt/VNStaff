@@ -33,6 +33,8 @@ public class Staff extends Plugin {
 
             this.getProxy().getPluginManager().registerListener(this, new PostLoginListener());
             this.getProxy().getPluginManager().registerListener(this, new PlayerDisconnectListener());
+
+            //this.getProxy().getPluginManager().registerCommand(this, null);
         } catch (IOException e) {
             e.printStackTrace();
         }
