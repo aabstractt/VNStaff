@@ -19,16 +19,16 @@ public class Staff extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&9&lVNStaff (Vicnix Staff) is starting"));
+        this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&9&lVNStaff is starting"));
 
         MongoDBProvider.getInstance().init(this.getConfig().getString("mongouri", null));
 
-        this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff (Vicnix Staff) mongodb loaded"));
+        this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff mongodb loaded"));
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
 
-        this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff (Vicnix Staff) listeners loaded"));
+        this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff listeners loaded"));
 
         this.getServer().getPluginCommand("vanish").setExecutor(new SpigotVanishCommand());
         this.getServer().getPluginCommand("ltp").setExecutor(new SpigotLocateTeleportCommand());
