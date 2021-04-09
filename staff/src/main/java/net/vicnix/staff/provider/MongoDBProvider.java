@@ -24,7 +24,7 @@ public class MongoDBProvider {
     public void init(String mongouri) {
         MongoClient mongoClient;
 
-        if (mongouri == null) {
+        if (mongouri == null || mongouri.equals("")) {
             mongoClient = new MongoClient();
         } else {
             mongoClient = new MongoClient(new MongoClientURI(mongouri));

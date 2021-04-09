@@ -1,0 +1,15 @@
+package net.vicnix.staff.listener;
+
+import net.md_5.bungee.api.event.PlayerDisconnectEvent;
+import net.md_5.bungee.api.plugin.Listener;
+import net.md_5.bungee.event.EventHandler;
+import net.md_5.bungee.event.EventPriority;
+import net.vicnix.staff.session.SessionManager;
+
+public class PlayerDisconnectListener implements Listener {
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onPlayerDisconnectEvent(PlayerDisconnectEvent ev) {
+        SessionManager.getInstance().closeSession(ev.getPlayer().getUniqueId());
+    }
+}
