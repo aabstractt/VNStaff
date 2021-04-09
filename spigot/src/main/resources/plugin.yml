@@ -1,0 +1,10 @@
+name: VNStaff
+author: iTheTrollIdk
+version: 1.0
+main: net.vicnix.staff.Staff
+
+commands:
+  vanish:
+    description: "Vanish command"
+  ltp:
+    description: "Locate a player and go to he"
