@@ -22,6 +22,7 @@ public class SpigotFreezeCommand implements CommandExecutor {
         Player playerSender = (Player) sender;
         if(!playerSender.hasPermission("vicnix.staff")){
             playerSender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&3["+plugin.getName()+"] &4 No tiene permisos para ejecutar este comando"));
+            return false;
         }
         if(args.length == 0){
             playerSender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3["+plugin.getName()+"] &4 Debe introducir el nombre del usuario a freezear"));
