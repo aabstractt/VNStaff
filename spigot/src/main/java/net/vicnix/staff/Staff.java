@@ -1,8 +1,10 @@
 package net.vicnix.staff;
 
+import net.vicnix.staff.command.SpigotFreezeCommand;
 import net.vicnix.staff.command.SpigotLocateTeleportCommand;
 import net.vicnix.staff.command.SpigotRestartCommand;
 import net.vicnix.staff.command.SpigotVanishCommand;
+import net.vicnix.staff.listener.FreezeListener;
 import net.vicnix.staff.listener.PlayerJoinListener;
 import net.vicnix.staff.listener.PlayerQuitListener;
 import net.vicnix.staff.provider.MongoDBProvider;
@@ -31,12 +33,14 @@ public class Staff extends JavaPlugin {
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
+        this.getServer().getPluginManager().registerEvents(new FreezeListener(), this);
 
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff listeners loaded"));
 
         this.getServer().getPluginCommand("vanish").setExecutor(new SpigotVanishCommand());
         this.getServer().getPluginCommand("stp").setExecutor(new SpigotLocateTeleportCommand());
         this.getServer().getPluginCommand("devrestart").setExecutor(new SpigotRestartCommand());
+        this.getServer().getPluginCommand("freeze").setExecutor(new SpigotFreezeCommand());
 
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff commands loaded"));
     }

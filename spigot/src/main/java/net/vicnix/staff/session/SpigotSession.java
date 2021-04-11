@@ -8,9 +8,9 @@ import java.util.stream.Stream;
 
 public class SpigotSession extends Session {
 
-    public SpigotSession(SessionStorage sessionStorage) {
-        super(sessionStorage);
-    }
+    private boolean freezed = false;
+
+    public SpigotSession(SessionStorage sessionStorage) { super(sessionStorage); }
 
     public void setDefaultAttributes() {
         if (!this.sessionStorage.isVanished()) return;
@@ -51,4 +51,9 @@ public class SpigotSession extends Session {
     public void hidePlayer(Session session) {
         this.getInstance().hidePlayer(((SpigotSession) session).getInstance());
     }
+
+    public Boolean isFreezed(){
+        return this.freezed;
+    }
+    public void setFreezed(Boolean state){ this.freezed = state; }
 }

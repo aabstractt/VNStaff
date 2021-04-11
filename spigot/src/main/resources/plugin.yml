@@ -10,3 +10,5 @@ commands:
     description: "Locate a player and go to he"
   devrestart:
     description: "Reiniciar el servidor (Solo usar para actualizar si es que un owner no actualiza)"
+  freeze:
+    description: "Freeze a player so you can do him a ss!"
