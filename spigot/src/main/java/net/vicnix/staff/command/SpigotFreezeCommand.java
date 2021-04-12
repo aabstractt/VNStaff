@@ -3,7 +3,6 @@ package net.vicnix.staff.command;
 import net.vicnix.staff.Staff;
 import net.vicnix.staff.session.Session;
 import net.vicnix.staff.session.SessionManager;
-import net.vicnix.staff.session.SpigotSession;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
