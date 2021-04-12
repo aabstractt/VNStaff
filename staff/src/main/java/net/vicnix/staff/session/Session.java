@@ -27,4 +27,12 @@ public abstract class Session {
     public abstract void showPlayer(Session session);
 
     public abstract void hidePlayer(Session session);
+
+    public abstract Boolean isFreezed();
+
+    public abstract void setFreezed(Boolean state);
+
+    public abstract void setFreezedBy(String name);
+
+    public abstract String getFreezedBy();
 }

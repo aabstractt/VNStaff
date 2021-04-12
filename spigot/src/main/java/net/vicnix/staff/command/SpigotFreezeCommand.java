@@ -1,6 +1,7 @@
 package net.vicnix.staff.command;
 
 import net.vicnix.staff.Staff;
+import net.vicnix.staff.session.Session;
 import net.vicnix.staff.session.SessionManager;
 import net.vicnix.staff.session.SpigotSession;
 import org.bukkit.Bukkit;
@@ -35,19 +36,15 @@ public class SpigotFreezeCommand implements CommandExecutor {
             return true;
         }
 
-        SpigotSession playerSession = (SpigotSession) SessionManager.getInstance().getSession(toFreezePlayer.getUniqueId());
-        if(!playerSession.isFreezed()){
-            playerSession.setFreezed(true);
-            playerSession.sendMessage("&8 "+"------------------------------");
-            playerSession.sendMessage("&c            No te desconectes!");
-            playerSession.sendMessage("&e Fuiste freezeado por "+playerSender.getDisplayName());
-            playerSession.sendMessage("&e Admites uso de &4 hacks &e o prefieres &6 ss");
-            playerSession.sendMessage("&8 "+"------------------------------");
-        }else{
+        Session playerSession = SessionManager.getInstance().getSession(toFreezePlayer.getUniqueId());
+        if(playerSession.isFreezed()){
             playerSession.setFreezed(false);
             playerSession.sendMessage("&8 "+"------------------------------");
             playerSession.sendMessage("&a Fuiste unfreezeado por "+playerSender.getDisplayName());
             playerSession.sendMessage("&8 "+"------------------------------");
+        }else{
+            playerSession.setFreezed(true);
+            playerSession.setFreezedBy(playerSender.getDisplayName());
         }
 
         return true;

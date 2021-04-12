@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 public class SpigotSession extends Session {
 
     private boolean freezed = false;
+    private String freezedByName = null;
 
     public SpigotSession(SessionStorage sessionStorage) { super(sessionStorage); }
 
@@ -40,6 +41,17 @@ public class SpigotSession extends Session {
     }
 
     @Override
+    public Boolean isFreezed(){
+        return this.freezed;
+    }
+    @Override
+    public void setFreezed(Boolean state){ this.freezed = state; }
+    @Override
+    public void setFreezedBy(String name){ this.freezedByName = name; }
+    @Override
+    public String getFreezedBy(){ return this.freezedByName; }
+
+    @Override
     public void sendMessage(String message) {
         this.getInstance().sendMessage(ChatColor.translateAlternateColorCodes('&', message));
     }
@@ -51,9 +63,4 @@ public class SpigotSession extends Session {
     public void hidePlayer(Session session) {
         this.getInstance().hidePlayer(((SpigotSession) session).getInstance());
     }
-
-    public Boolean isFreezed(){
-        return this.freezed;
-    }
-    public void setFreezed(Boolean state){ this.freezed = state; }
 }
