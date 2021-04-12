@@ -17,12 +17,12 @@ public class SpigotFreezeCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(!(sender instanceof Player)){
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&3["+plugin.getName()+"] &4 La consola no puede usar este comando"));
-            return false;
+            return true;
         }
         Player playerSender = (Player) sender;
         if(!playerSender.hasPermission("vicnix.staff")){
             playerSender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&3["+plugin.getName()+"] &4 No tiene permisos para ejecutar este comando"));
-            return false;
+            return true;
         }
         if(args.length == 0){
             playerSender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3["+plugin.getName()+"] &4 Debe introducir el nombre del usuario a freezear"));
@@ -32,7 +32,7 @@ public class SpigotFreezeCommand implements CommandExecutor {
         Player toFreezePlayer = Bukkit.getPlayer(args[0]);
         if(toFreezePlayer == null){
             playerSender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3["+plugin.getName()+"] El jugador "+args[0]+" no se encuentra conectado actualmente"));
-            return false;
+            return true;
         }
 
         SpigotSession playerSession = (SpigotSession) SessionManager.getInstance().getSession(toFreezePlayer.getUniqueId());
