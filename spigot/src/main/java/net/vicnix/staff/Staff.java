@@ -25,6 +25,8 @@ public class Staff extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        ConsoleUtils.setInstance(new SpigotConsoleUtils());
+
         this.saveConfig();
         this.getConfig().options().copyDefaults(true);
 
@@ -58,13 +60,13 @@ public class Staff extends JavaPlugin {
         for(Session session : SessionManager.getInstance().getSessions().values()) {
             if (!session.isFreezed()) continue;
 
-            session.sendMessage("&8 "+"------------------------------");
+            session.sendMessage("&8 ------------------------------");
 
             session.sendMessage("&c            No te desconectes!");
             session.sendMessage("&e Fuiste freezeado por "+session.getFreezedBy());
             session.sendMessage("&e Admites uso de &4 hacks &e o prefieres &6 ss");
 
-            session.sendMessage("&8 "+"------------------------------");
+            session.sendMessage("&8 ------------------------------");
         }
     }
 }

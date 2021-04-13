@@ -8,14 +8,6 @@ import org.bukkit.entity.Player;
 
 public class SpigotConsoleUtils extends ConsoleUtils {
 
-    public static ConsoleUtils getInstance() {
-        if (instance == null) {
-            instance = new SpigotConsoleUtils();
-        }
-
-        return instance;
-    }
-
     @Override
     public Session getSessionPlayer(String name) {
         Player player = Bukkit.getPlayer(name);

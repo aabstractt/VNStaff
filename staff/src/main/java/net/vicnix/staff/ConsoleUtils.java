@@ -10,6 +10,10 @@ public abstract class ConsoleUtils {
         return instance;
     }
 
+    public static void setInstance(ConsoleUtils consoleUtils) {
+        instance = consoleUtils;
+    }
+
     public abstract void sendMessage(String message);
 
     public abstract Session getSessionPlayer(String name);

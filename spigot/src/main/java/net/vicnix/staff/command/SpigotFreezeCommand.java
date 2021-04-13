@@ -18,7 +18,6 @@ public class SpigotFreezeCommand implements CommandExecutor {
             return true;
         }
 
-        Player playerSender = (Player) sender;
         if (!sender.hasPermission("vicnix.staff")) {
             sender.sendMessage(ChatColor.RED + "No tienes permisos para ejecutar este comando");
 
@@ -42,9 +41,9 @@ public class SpigotFreezeCommand implements CommandExecutor {
         target.setFreezed(!target.isFreezed());
 
         if (!target.isFreezed()) {
-            target.sendMessage("&8 " + "------------------------------");
-            target.sendMessage("&a Fuiste descongelado por " + playerSender.getDisplayName());
-            target.sendMessage("&8 " + "------------------------------");
+            target.sendMessage("&8------------------------------");
+            target.sendMessage("&a Fuiste descongelado por " + sender.getName());
+            target.sendMessage("&8------------------------------");
         }
 
         return true;
