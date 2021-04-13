@@ -59,7 +59,7 @@ public class FreezeListener implements Listener {
 
         if (!session.isFreezed()) return;
 
-        ev.setTo(ev.getFrom());
+        ev.setTo(from);
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
