@@ -46,22 +46,25 @@ public class Staff extends JavaPlugin {
         this.getServer().getPluginCommand("freeze").setExecutor(new SpigotFreezeCommand());
 
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff commands loaded"));
-        scheduler();
+
+        Bukkit.getScheduler().scheduleSyncDelayedTask(this, this::update);
     }
 
     public Boolean canDevAccess() {
         return this.getConfig().getBoolean("dev-access", true);
     }
-    public void scheduler(){
-        Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
-            for(Session session : SessionManager.getInstance().getSessions().values()) {
-                if (!session.isFreezed()) continue;
-                session.sendMessage("&8 "+"------------------------------");
-                session.sendMessage("&c            No te desconectes!");
-                session.sendMessage("&e Fuiste freezeado por "+session.getFreezedBy());
-                session.sendMessage("&e Admites uso de &4 hacks &e o prefieres &6 ss");
-                session.sendMessage("&8 "+"------------------------------");
-            }
-        }, 20*5);
+
+    public void update(){
+        for(Session session : SessionManager.getInstance().getSessions().values()) {
+            if (!session.isFreezed()) continue;
+
+            session.sendMessage("&8 "+"------------------------------");
+
+            session.sendMessage("&c            No te desconectes!");
+            session.sendMessage("&e Fuiste freezeado por "+session.getFreezedBy());
+            session.sendMessage("&e Admites uso de &4 hacks &e o prefieres &6 ss");
+
+            session.sendMessage("&8 "+"------------------------------");
+        }
     }
 }
