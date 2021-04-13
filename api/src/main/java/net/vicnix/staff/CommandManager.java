@@ -1,6 +1,7 @@
 package net.vicnix.staff;
 
 import net.vicnix.staff.command.Command;
+import net.vicnix.staff.command.FreezeCommand;
 import net.vicnix.staff.command.LocateTeleportCommand;
 import net.vicnix.staff.command.VanishCommand;
 import net.vicnix.staff.session.Session;
@@ -15,6 +16,7 @@ public class CommandManager {
     private final Map<String, Command> commandMap = new HashMap<>() {{
         put("vanish", new VanishCommand());
         put("ltp", new LocateTeleportCommand());
+        put("freeze", new FreezeCommand());
     }};
 
     public static CommandManager getInstance() {
