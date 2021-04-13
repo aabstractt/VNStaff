@@ -46,4 +46,24 @@ public class BungeeSession extends Session {
     public void hidePlayer(Session session) {
 
     }
+
+    @Override
+    public Boolean isFreezed() {
+        return null;
+    }
+
+    @Override
+    public void setFreezed(Boolean state) {
+
+    }
+
+    @Override
+    public void setFreezedBy(String name) {
+
+    }
+
+    @Override
+    public String getFreezedBy() {
+        return null;
+    }
 }
