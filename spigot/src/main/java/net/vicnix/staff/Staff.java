@@ -16,8 +16,6 @@ public class Staff extends JavaPlugin {
 
     public static Staff instance;
 
-    private Boolean running = true;
-
     public static Staff getInstance() {
         return instance;
     }
@@ -51,18 +49,6 @@ public class Staff extends JavaPlugin {
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff commands loaded"));
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(this, this::update, 100);
-
-        // TODO: Ignore this
-        /*new Thread(() -> {
-            while (this.running) {
-                RedisProvider.getInstance().update();
-            }
-        }).start();*/
-    }
-
-    @Override
-    public void onDisable() {
-        this.running = false;
     }
 
     public Boolean canDevAccess() {

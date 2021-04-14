@@ -4,7 +4,6 @@ import net.vicnix.staff.session.Session;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -18,18 +17,24 @@ public class RedisProvider {
         return instance;
     }
 
+    public JedisPool getJedisPool() {
+        return this.jedisPool;
+    }
+
     public void init() {
         this.jedisPool = new JedisPool();
 
         Jedis jedis = this.jedisPool.getResource();
 
-        jedis.hmset("session:0bligado", new HashMap<>() {{
-            this.put("0bligado", "a");
-        }});
+        jedis.sadd("sessions:sw01", "0bligado");
 
-        System.out.println("Hola, obteniendo datos de sessions");
-
-        System.out.println(jedis.hgetAll("session:0bligado"));
+        new Thread(() -> {
+            while (this.jedisPool != null) {
+                for (String sessionName : jedis.smembers("sessions:sw01")) {
+                    jedis.srem("sessions:sw01", sessionName);
+                }
+            }
+        }).start();
     }
 
     public void update() {

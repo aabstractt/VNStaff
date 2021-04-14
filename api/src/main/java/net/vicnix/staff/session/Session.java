@@ -1,6 +1,5 @@
 package net.vicnix.staff.session;
 
-import net.vicnix.staff.provider.MongoDBProvider;
 import net.vicnix.staff.provider.RedisProvider;
 
 import java.util.HashMap;
@@ -16,10 +15,6 @@ public abstract class Session {
 
     public SessionStorage getSessionStorage() {
         return this.sessionStorage;
-    }
-
-    public void refresh() {
-        this.sessionStorage = MongoDBProvider.getInstance().loadSessionStorage(this.sessionStorage.getName(), this.sessionStorage.getUniqueId());
     }
 
     public abstract void teleportTo(Session session);
@@ -54,7 +49,7 @@ public abstract class Session {
             this.put("vanished", String.valueOf(sessionStorage.isVanished()));
             this.put("canSeeStaff", String.valueOf(sessionStorage.canSeeStaff()));
             this.put("freezed", String.valueOf(isFreezed()));
-            this.put("freezedBy", whoFreezed());
+            this.put("whoFreezed", whoFreezed());
         }});
     }
 }
