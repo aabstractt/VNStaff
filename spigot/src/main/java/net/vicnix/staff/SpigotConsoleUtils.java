@@ -20,6 +20,11 @@ public class SpigotConsoleUtils extends ConsoleUtils {
     }
 
     @Override
+    public void scheduleAsync(Runnable runnable) {
+        Bukkit.getScheduler().runTaskAsynchronously(Staff.getInstance(), runnable);
+    }
+
+    @Override
     public void sendMessage(String message) {
         Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', message));
     }

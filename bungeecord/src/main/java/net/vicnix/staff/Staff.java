@@ -24,6 +24,8 @@ public class Staff extends Plugin {
     public void onEnable() {
         instance = this;
 
+        ConsoleUtils.setInstance(new BungeeConsoleUtils());
+
         try {
             this.saveConfig();
 

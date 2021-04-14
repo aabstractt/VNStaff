@@ -48,7 +48,7 @@ public class Staff extends JavaPlugin {
 
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff commands loaded"));
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(this, this::update);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(this, this::update, 100);
     }
 
     public Boolean canDevAccess() {

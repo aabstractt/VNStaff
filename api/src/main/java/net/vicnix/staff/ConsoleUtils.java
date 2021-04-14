@@ -17,4 +17,6 @@ public abstract class ConsoleUtils {
     public abstract void sendMessage(String message);
 
     public abstract Session getSessionPlayer(String name);
+
+    public abstract void scheduleAsync(Runnable runnable);
 }

@@ -8,14 +8,6 @@ import net.vicnix.staff.session.SessionManager;
 
 public class BungeeConsoleUtils extends ConsoleUtils {
 
-    public static ConsoleUtils getInstance() {
-        if (instance == null) {
-            instance = new BungeeConsoleUtils();
-        }
-
-        return instance;
-    }
-
     @Override
     public void sendMessage(String message) {
         ProxyServer.getInstance().getLogger().info(ChatColor.translateAlternateColorCodes('&', message));
@@ -30,5 +22,10 @@ public class BungeeConsoleUtils extends ConsoleUtils {
         }
 
         return SessionManager.getInstance().getSession(player.getUniqueId());
+    }
+
+    @Override
+    public void scheduleAsync(Runnable runnable) {
+        ProxyServer.getInstance().getScheduler().runAsync(Staff.getInstance(), runnable);
     }
 }
