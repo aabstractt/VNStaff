@@ -63,7 +63,7 @@ public class BungeeSession extends Session {
     }
 
     @Override
-    public String getFreezedBy() {
+    public String whoFreezed() {
         return null;
     }
 }

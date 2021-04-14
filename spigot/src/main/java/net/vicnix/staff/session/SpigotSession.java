@@ -49,7 +49,7 @@ public class SpigotSession extends Session {
     @Override
     public void setFreezedBy(String name){ this.freezedByName = name; }
     @Override
-    public String getFreezedBy(){ return this.freezedByName; }
+    public String whoFreezed(){ return this.freezedByName; }
 
     @Override
     public void sendMessage(String message) {

@@ -1,6 +1,10 @@
 package net.vicnix.staff.session;
 
 import net.vicnix.staff.provider.MongoDBProvider;
+import net.vicnix.staff.provider.RedisProvider;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Session {
 
@@ -34,5 +38,23 @@ public abstract class Session {
 
     public abstract void setFreezedBy(String name);
 
-    public abstract String getFreezedBy();
+    public abstract String whoFreezed();
+
+    public void updateStorage(Map<String, String> data) {
+        this.sessionStorage.setVanished(Boolean.valueOf(data.get("vanished")));
+
+        this.sessionStorage.setCanSeeStaff(Boolean.valueOf(data.get("canSeeStaff")));
+
+        this.setFreezed(Boolean.valueOf(data.get("freezed")));
+    }
+
+    public void syncRedis() {
+        RedisProvider.getInstance().saveSessionStorage(this.sessionStorage.getUniqueId(), new HashMap<>() {{
+            this.put("name", sessionStorage.getName());
+            this.put("vanished", String.valueOf(sessionStorage.isVanished()));
+            this.put("canSeeStaff", String.valueOf(sessionStorage.canSeeStaff()));
+            this.put("freezed", String.valueOf(isFreezed()));
+            this.put("freezedBy", whoFreezed());
+        }});
+    }
 }

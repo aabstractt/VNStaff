@@ -16,6 +16,8 @@ public class Staff extends JavaPlugin {
 
     public static Staff instance;
 
+    private Boolean running = true;
+
     public static Staff getInstance() {
         return instance;
     }
@@ -49,6 +51,18 @@ public class Staff extends JavaPlugin {
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff commands loaded"));
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(this, this::update, 100);
+
+        // TODO: Ignore this
+        /*new Thread(() -> {
+            while (this.running) {
+                RedisProvider.getInstance().update();
+            }
+        }).start();*/
+    }
+
+    @Override
+    public void onDisable() {
+        this.running = false;
     }
 
     public Boolean canDevAccess() {
@@ -62,7 +76,7 @@ public class Staff extends JavaPlugin {
             session.sendMessage("&8 ------------------------------");
 
             session.sendMessage("&c            No te desconectes!");
-            session.sendMessage("&e Fuiste freezeado por "+session.getFreezedBy());
+            session.sendMessage("&e Fuiste freezeado por " + session.whoFreezed());
             session.sendMessage("&e Admites uso de &4 hacks &e o prefieres &6 ss");
 
             session.sendMessage("&8 ------------------------------");
