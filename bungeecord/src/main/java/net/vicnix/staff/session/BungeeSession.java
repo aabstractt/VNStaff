@@ -58,9 +58,7 @@ public class BungeeSession extends Session {
     }
 
     @Override
-    public void setFreezedBy(String name) {
-
-    }
+    public void setWhoFreezed(String name) {}
 
     @Override
     public String whoFreezed() {

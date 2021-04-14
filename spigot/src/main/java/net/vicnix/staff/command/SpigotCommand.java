@@ -21,6 +21,7 @@ public class SpigotCommand implements CommandExecutor {
         this.spigotCommand = spigotCommand;
     }
 
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!command.getName().equals(this.spigotCommand)) return false;

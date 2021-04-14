@@ -31,8 +31,9 @@ public class FreezeCommand implements Command {
 
         if (!target.isFreezed()) {
             target.sendMessage("&8------------------------------");
-            target.sendMessage("&a Fuiste descongelado por " + session.getSessionStorage().getName());
+            target.sendMessage("&a Fuiste descongelado por " + target.whoFreezed());
             target.sendMessage("&8------------------------------");
         }
+        target.setWhoFreezed(target.isFreezed() ? session.getSessionStorage().getName() : null);
     }
 }

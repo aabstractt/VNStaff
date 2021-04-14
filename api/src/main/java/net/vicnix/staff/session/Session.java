@@ -36,7 +36,7 @@ public abstract class Session {
 
     public abstract void setFreezed(Boolean state);
 
-    public abstract void setFreezedBy(String name);
+    public abstract void setWhoFreezed(String name);
 
     public abstract String whoFreezed();
 

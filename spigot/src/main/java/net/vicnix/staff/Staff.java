@@ -33,7 +33,7 @@ public class Staff extends JavaPlugin {
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&9&lVNStaff is starting"));
 
         MongoDBProvider.getInstance().init(this.getConfig().getString("mongouri", null));
-        RedisProvider.getInstance().init();
+        //RedisProvider.getInstance().init();
 
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff mongodb loaded"));
 
