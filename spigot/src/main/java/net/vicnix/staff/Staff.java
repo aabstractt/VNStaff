@@ -1,7 +1,9 @@
 package net.vicnix.staff;
 
-import net.vicnix.staff.command.*;
+import net.vicnix.staff.command.SpigotCommand;
+import net.vicnix.staff.command.SpigotRestartCommand;
 import net.vicnix.staff.listener.FreezeListener;
+import net.vicnix.staff.listener.InventoryListener;
 import net.vicnix.staff.listener.PlayerJoinListener;
 import net.vicnix.staff.listener.PlayerQuitListener;
 import net.vicnix.staff.provider.MongoDBProvider;
@@ -25,19 +27,23 @@ public class Staff extends JavaPlugin {
 
         ConsoleUtils.setInstance(new SpigotConsoleUtils());
 
-        this.saveConfig();
-        this.getConfig().options().copyDefaults(true);
+        this.saveDefaultConfig();
+        this.reloadConfig();
 
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&9&lVNStaff is starting"));
 
         MongoDBProvider.getInstance().init(this.getConfig().getString("mongouri", null));
-        //RedisProvider.getInstance().init();
+
+        if (this.getConfig().getBoolean("redis-enabled", false)) {
+            RedisProvider.getInstance().init();
+        }
 
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff mongodb loaded"));
 
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
         this.getServer().getPluginManager().registerEvents(new FreezeListener(), this);
+        this.getServer().getPluginManager().registerEvents(new InventoryListener(), this);
 
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff listeners loaded"));
 

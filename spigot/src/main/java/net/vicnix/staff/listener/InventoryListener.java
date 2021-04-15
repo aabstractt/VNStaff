@@ -2,54 +2,34 @@ package net.vicnix.staff.listener;
 
 import net.vicnix.staff.session.Session;
 import net.vicnix.staff.session.SessionManager;
-import net.vicnix.staff.session.SpigotSession;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import net.vicnix.staff.utils.ItemUtils;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
 
 public class InventoryListener implements Listener {
-    public void onInventoryClick(InventoryClickEvent e) {
-        if(!(e.getWhoClicked() instanceof Player)) return;
 
-        Player player = (Player) e.getWhoClicked();
+    @EventHandler (priority = EventPriority.NORMAL)
+    public void onInventoryClick(InventoryClickEvent ev) {
+        if(!(ev.getWhoClicked() instanceof Player)) return;
+
+        ItemStack itemStack = ev.getCurrentItem();
+
+        if(itemStack == null) return;
+
+        Player player = (Player) ev.getWhoClicked();
+
         Session session = SessionManager.getInstance().getSession(player.getUniqueId());
 
-        //Todo Mirar si en la session el staff mode = true
-        if(e.getCurrentItem() == null) return;
+        if (session == null || !session.getSessionStorage().isStaff()) return;
 
-        String itemName = e.getCurrentItem().getItemMeta().getDisplayName();
-        switch (itemName){
-            case "Vanish off":
-                ItemStack vanishItem = new ItemStack(Material.INK_SACK, 1, (byte) 10);
-                ItemMeta vanishMeta = vanishItem.getItemMeta();
-                vanishMeta.setDisplayName(ChatColor.GREEN + "Vanish off");
-                vanishItem.setItemMeta(vanishMeta);
-                e.getInventory().setItem(1, vanishItem);
-                //Todo llamar a función
-                break;
-            case "Vanish on":
-                vanishItem = new ItemStack(Material.INK_SACK, 1, (byte) 0);
-                vanishMeta = vanishItem.getItemMeta();
-                vanishMeta.setDisplayName(ChatColor.GREEN + "Vanish off");
-                vanishItem.setItemMeta(vanishMeta);
-                e.getInventory().setItem(1, vanishItem);
-                //Todo llamar a función
-                break;
-            case "Tp a jugador":
-                //Todo llamar a función
-                break;
-            case "Configuration":
-                //Todo llamar a función
-                break;
+        for (ItemStack item : ItemUtils.getStaffContents(session.getSessionStorage().isVanished()).values()) {
+            if (!item.getItemMeta().getDisplayName().equals(itemStack.getItemMeta().getDisplayName())) continue;
+
+            session.sendMessage("Action for " + item.getItemMeta().getDisplayName());
         }
-    }
-
-    public void setVanish(Session session){
-        SpigotSession a = (SpigotSession) session;
     }
 }

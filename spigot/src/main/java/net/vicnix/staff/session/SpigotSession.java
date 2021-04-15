@@ -1,14 +1,9 @@
 package net.vicnix.staff.session;
 
+import net.vicnix.staff.utils.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.stream.Stream;
 
 public class SpigotSession extends Session {
 
@@ -18,40 +13,27 @@ public class SpigotSession extends Session {
     public SpigotSession(SessionStorage sessionStorage) { super(sessionStorage); }
 
     public void setDefaultAttributes() {
-        /*if (!this.sessionStorage.isVanished()) return;
+        if (!this.sessionStorage.isStaff()) return;
 
-        Bukkit.getOnlinePlayers().forEach(player -> player.hidePlayer(this.getInstance()));
+        ItemUtils.getStaffContents(this.sessionStorage.isVanished()).forEach((slot, itemStack) -> this.getInstance().getInventory().setItem(slot, itemStack));
 
-        Stream<Session> sessionStream = SessionManager.getInstance().getSessions().values().stream();
+        if (this.sessionStorage.isVanished()) {
+            Bukkit.getOnlinePlayers().forEach(player -> player.hidePlayer(this.getInstance()));
+        }
 
-        sessionStream.filter(session -> session.getSessionStorage().canSeeStaff() && !session.getSessionStorage().getUniqueId().equals(this.getSessionStorage().getUniqueId())).forEach(session -> session.showPlayer(this));
+        for (Session session : SessionManager.getInstance().getSessions().values()) {
+            if (!session.getSessionStorage().isStaff()) continue;
 
-        if (!this.sessionStorage.canSeeStaff()) return;
+            if (session.getSessionStorage().canSeeStaff()) {
+                session.showPlayer(this);
+            }
 
-        sessionStream.filter(session -> session.getSessionStorage().isVanished() && !session.getSessionStorage().getUniqueId().equals(this.getSessionStorage().getUniqueId())).forEach(this::showPlayer);
-    */
-        ItemStack tpItem = new ItemStack(Material.COMPASS);
-        ItemMeta tpMeta = tpItem.getItemMeta();
-        tpMeta.setDisplayName(ChatColor.GREEN + "Tp a jugador");
-        tpItem.setItemMeta(tpMeta);
+            if (!session.getSessionStorage().isVanished()) continue;
 
-        ItemStack vanishItem = new ItemStack(Material.INK_SACK, 1, (byte) 10);
-        ItemMeta vanishMeta = vanishItem.getItemMeta();
-        vanishMeta.setDisplayName(ChatColor.GREEN + "Vanish on");
-        vanishItem.setItemMeta(vanishMeta);
+            if (!this.sessionStorage.canSeeStaff()) continue;
 
-        ItemStack configItem = new ItemStack(Material.IRON_FENCE);
-        ItemMeta configMeta = configItem.getItemMeta();
-        configMeta.setDisplayName(ChatColor.GRAY + "Configuration");
-        configItem.setItemMeta(configMeta);
-
-        Player instance = this.getInstance();
-        Inventory instanceInventory = instance.getInventory();
-
-        instanceInventory.clear();
-        instanceInventory.setItem(0, tpItem);
-        instanceInventory.setItem(1, vanishItem);
-        instanceInventory.setItem(8, configItem);
+            this.showPlayer(session);
+        }
     }
 
     public Player getInstance() {

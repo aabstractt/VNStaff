@@ -7,6 +7,7 @@ public class SessionStorage {
     private final String name;
     private final UUID uuid;
 
+    private Boolean staff = false;
     private Boolean vanished = false;
     private Boolean canSeeStaff = true;
 
@@ -16,8 +17,10 @@ public class SessionStorage {
         this.uuid = uuid;
     }
 
-    public SessionStorage(String name, UUID uuid, Boolean vanished, Boolean canSeeStaff) {
+    public SessionStorage(String name, UUID uuid, Boolean staff, Boolean vanished, Boolean canSeeStaff) {
         this(name, uuid);
+
+        this.staff = staff;
 
         this.vanished = vanished;
 
@@ -30,6 +33,14 @@ public class SessionStorage {
 
     public UUID getUniqueId() {
         return this.uuid;
+    }
+
+    public Boolean isStaff() {
+        return this.staff;
+    }
+
+    public void setStaff(Boolean staff) {
+        this.staff = staff;
     }
 
     public Boolean isVanished() {

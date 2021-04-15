@@ -55,6 +55,7 @@ public class MongoDBProvider {
         return new SessionStorage(
                 name,
                 uuid,
+                document.getBoolean("staff", false),
                 document.getBoolean("vanished", false),
                 document.getBoolean("canSeeStaff", true)
         );
@@ -71,7 +72,9 @@ public class MongoDBProvider {
 
         Document newDocument = new Document("uuid", sessionStorage.getUniqueId().toString())
                 .append("name", sessionStorage.getName())
-                .append("vanished", sessionStorage.isVanished());
+                .append("staff", sessionStorage.isStaff())
+                .append("vanished", sessionStorage.isVanished())
+                .append("canSeeStaff", sessionStorage.canSeeStaff());
 
         if (document == null || document.isEmpty()) {
             this.collection.insertOne(newDocument);
