@@ -24,7 +24,11 @@ public class CommandManager {
     }
 
     public void executeCommand(Session session, String label, String[] args) {
-        if (session == null) return;
+        if (session == null) {
+            ConsoleUtils.getInstance().sendMessage("&cRun this command in-game");
+
+            return;
+        }
 
         Command command = this.commandMap.get(label);
 
