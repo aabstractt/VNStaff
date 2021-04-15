@@ -33,6 +33,8 @@ public class InventoryListener implements Listener {
             if (!item.getItemMeta().getDisplayName().equals(itemStack.getItemMeta().getDisplayName())) continue;
 
             session.sendMessage("Action for " + item.getItemMeta().getDisplayName());
+
+            ev.setCancelled(true);
         }
     }
 
