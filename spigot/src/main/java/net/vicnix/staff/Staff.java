@@ -10,13 +10,24 @@ import net.vicnix.staff.provider.MongoDBProvider;
 import net.vicnix.staff.provider.RedisProvider;
 import net.vicnix.staff.session.Session;
 import net.vicnix.staff.session.SessionManager;
+import net.vicnix.staff.utils.action.FreezeAction;
+import net.vicnix.staff.utils.action.IAction;
+import net.vicnix.staff.utils.action.VanishAction;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Staff extends JavaPlugin {
 
     public static Staff instance;
+
+    private final Map<String, IAction> actions = new HashMap<>() {{
+        this.put("vanish", new VanishAction());
+        this.put("freeze", new FreezeAction());
+    }};
 
     public static Staff getInstance() {
         return instance;
@@ -61,8 +72,12 @@ public class Staff extends JavaPlugin {
         return this.getConfig().getBoolean("dev-access", true);
     }
 
-    public void update(){
-        for(Session session : SessionManager.getInstance().getSessions().values()) {
+    public IAction getAction(String name) {
+        return this.actions.getOrDefault(name, null);
+    }
+
+    public void update() {
+        for (Session session : SessionManager.getInstance().getSessions().values()) {
             if (!session.isFreezed()) continue;
 
             session.sendMessage("&8 ------------------------------");

@@ -76,7 +76,7 @@ public class InventoryListener implements Listener {
         if (itemStack == null) return;
 
         for (ItemStack item : ItemUtils.getStaffContents(session.getSessionStorage().isVanished()).values()) {
-            if (itemStack.getItemMeta() == null) continue;
+            if (!itemStack.hasItemMeta()) continue;
 
             if (!item.getItemMeta().getDisplayName().equals(itemStack.getItemMeta().getDisplayName())) continue;
 
@@ -91,12 +91,14 @@ public class InventoryListener implements Listener {
         if (ev.getPlayer() == null) return;
 
         Player player = ev.getPlayer();
+
         Session session = SessionManager.getInstance().getSession(player.getUniqueId());
 
         if (session == null || !session.getSessionStorage().isStaff()) return;
 
         ItemStack block = ev.getItemInHand();
-        if(block == null || block.getType() == Material.AIR || !block.hasItemMeta()){ return; }
+
+        if(!block.hasItemMeta()) return;
 
         for (ItemStack item : ItemUtils.getStaffContents(session.getSessionStorage().isVanished()).values()) {
             if (!item.getItemMeta().getDisplayName().equals(block.getItemMeta().getDisplayName())) continue;
@@ -108,7 +110,7 @@ public class InventoryListener implements Listener {
     }
 
     @EventHandler (priority = EventPriority.NORMAL)
-    private void EntityPickupItemEvent(PlayerPickupItemEvent ev){
+    private void onPlayerPickupItemEvent(PlayerPickupItemEvent ev){
         if (ev.getPlayer() == null) return;
 
         Player player = ev.getPlayer();

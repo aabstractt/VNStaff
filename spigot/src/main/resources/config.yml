@@ -21,6 +21,7 @@ staff-items:
     amount: 1
     displayName: "&r&bIr a un jugador aleatorio"
     slot: 2
+    action: "vanish"
   -
     itemName: "Configuration"
     id: 101
