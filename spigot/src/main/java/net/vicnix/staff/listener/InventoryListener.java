@@ -95,11 +95,8 @@ public class InventoryListener implements Listener {
 
         if (session == null || !session.getSessionStorage().isStaff()) return;
 
-        ItemStack block = ev.getItemInHand();
-        if(block == null || block.getType() == Material.AIR || !block.hasItemMeta()){ return; }
-
         for (ItemStack item : ItemUtils.getStaffContents(session.getSessionStorage().isVanished()).values()) {
-            if (!item.getItemMeta().getDisplayName().equals(block.getItemMeta().getDisplayName())) continue;
+            if (!item.getItemMeta().getDisplayName().equals(ev.getItemInHand().getItemMeta().getDisplayName())) continue;
 
             ev.setCancelled(true);
 
