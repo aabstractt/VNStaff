@@ -25,6 +25,11 @@ public class SpigotConsoleUtils extends ConsoleUtils {
     }
 
     @Override
+    public String getServerName() {
+        return null;
+    }
+
+    @Override
     public void sendMessage(String message) {
         Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', message));
     }

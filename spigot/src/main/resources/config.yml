@@ -8,6 +8,7 @@ staff-items:
     damage: 10
     displayName: "&r&cVanish off"
     slot: 1
+    action: "vanish"
   -
     itemName: "vanish-enable"
     id: 351
@@ -15,16 +16,25 @@ staff-items:
     damage: 0
     displayName: "&r&aVanish on"
     slot: 1
+    action: "vanish"
   -
     itemName: "Teleport"
     id: 345
     amount: 1
     displayName: "&r&bIr a un jugador aleatorio"
-    slot: 2
-    action: "vanish"
+    slot: 0
+    action: "teleport"
   -
     itemName: "Configuration"
     id: 101
     amount: 1
     displayName: "&9&lConfiguration"
     slot: 8
+    action: "configuration"
+  -
+    itemName: "Freeze"
+    id: 79
+    amount: 1
+    displayName: "&b&lFreeze"
+    slot: 2
+    action: "freeze"
