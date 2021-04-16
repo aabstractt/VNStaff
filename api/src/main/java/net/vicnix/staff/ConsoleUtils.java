@@ -10,6 +10,8 @@ public abstract class ConsoleUtils {
         return instance;
     }
 
+    public abstract String getServerName();
+
     public static void setInstance(ConsoleUtils consoleUtils) {
         instance = consoleUtils;
     }

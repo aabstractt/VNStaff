@@ -1,5 +1,6 @@
 package net.vicnix.staff.provider;
 
+import net.vicnix.staff.ConsoleUtils;
 import net.vicnix.staff.session.Session;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -17,30 +18,31 @@ public class RedisProvider {
         return instance;
     }
 
-    public JedisPool getJedisPool() {
-        return this.jedisPool;
-    }
-
     public void init() {
         this.jedisPool = new JedisPool();
 
-        Jedis jedis = this.jedisPool.getResource();
+        String key = "servers:" + ConsoleUtils.getInstance().getServerName();
 
-        jedis.sadd("sessions:sw01", "0bligado");
+        //jedis.sadd(key, "0bligado");
 
         new Thread(() -> {
             while (this.jedisPool != null) {
-                for (String sessionName : jedis.smembers("sessions:sw01")) {
-                    jedis.srem("sessions:sw01", sessionName);
+                Jedis jedis = this.jedisPool.getResource();
+
+                for (String sessionName : jedis.smembers(key)) {
+                    this.loadSessionStorage(sessionName);
+
+                    jedis.srem(key, sessionName);
                 }
             }
         }).start();
     }
 
-    public void update() {
-    }
+    public void loadSessionStorage(String sessionName) {
+        Session session = ConsoleUtils.getInstance().getSessionPlayer(sessionName);
 
-    public void loadSessionStorage(Session session) {
+        if (session == null) return;
+
         Jedis jedis = this.jedisPool.getResource();
 
         Map<String, String> data = jedis.hgetAll("session:" + session.getSessionStorage().getUniqueId());
