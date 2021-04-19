@@ -1,9 +1,7 @@
 package net.vicnix.staff.listener;
 
-import net.vicnix.staff.ConsoleUtils;
 import net.vicnix.staff.session.Session;
 import net.vicnix.staff.session.SessionManager;
-import net.vicnix.staff.session.SpigotSession;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,6 +13,7 @@ public class PlayerInteractAtEntityListener implements Listener {
     @EventHandler (priority = EventPriority.NORMAL)
     public void onPlayerInteractAtEntityEvent(PlayerInteractAtEntityEvent ev){
         Player player = ev.getPlayer();
+
         Session session = SessionManager.getInstance().getSession(player.getUniqueId());
 
         //TODO: Check if the item in hand is equal to the freeze item in config if(player.getItemInHand())
@@ -22,9 +21,10 @@ public class PlayerInteractAtEntityListener implements Listener {
 
         if(!(ev.getRightClicked() instanceof Player)) return;
 
-        SpigotSession target = (SpigotSession) SessionManager.getInstance().getSession(ev.getRightClicked().getUniqueId());
+        Session target = SessionManager.getInstance().getSession(ev.getRightClicked().getUniqueId());
 
         if(target == null) return;
+
         if(target.getSessionStorage().isStaff()) return;
         //TODO: call the freeze action
     }
