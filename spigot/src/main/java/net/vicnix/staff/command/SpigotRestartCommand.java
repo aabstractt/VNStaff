@@ -8,10 +8,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class SpigotRestartCommand implements CommandExecutor {
+public class SpigotRestartCommand extends Command {
+
+    public SpigotRestartCommand() {
+        super("devrestart");
+    }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
+    public boolean execute(CommandSender sender, String label, String[] args) {
         if (!(sender instanceof Player)) return false;
 
         if (!Staff.getInstance().canDevAccess()) {

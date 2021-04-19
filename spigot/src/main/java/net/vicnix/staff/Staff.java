@@ -16,8 +16,13 @@ import net.vicnix.staff.utils.action.IAction;
 import net.vicnix.staff.utils.action.VanishAction;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandMap;
+import org.bukkit.plugin.SimplePluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,10 +65,10 @@ public class Staff extends JavaPlugin {
 
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff listeners loaded"));
 
-        this.getServer().getPluginCommand("vanish").setExecutor(new SpigotCommand("vanish", "vanish"));
-        this.getServer().getPluginCommand("stp").setExecutor(new SpigotCommand("ltp", "ltp"));
-        this.getServer().getPluginCommand("devrestart").setExecutor(new SpigotRestartCommand());
-        this.getServer().getPluginCommand("freeze").setExecutor(new SpigotCommand("freeze", "freeze"));
+        this.registerCommand(new SpigotCommand("vanish", "Staff command", "/vanish", new ArrayList<>(){{this.add("v");}}));
+        this.registerCommand(new SpigotCommand("ltp", "Staff command", "/ltp", new ArrayList<>()));
+        this.registerCommand(new SpigotCommand("freeze", "Staff command", "/freeze <player>", new ArrayList<>()));
+        this.registerCommand(new SpigotRestartCommand());
 
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff commands loaded"));
 
@@ -95,6 +100,22 @@ public class Staff extends JavaPlugin {
             session.sendMessage("&e Admites uso de &4 hacks &e o prefieres &6 ss");
 
             session.sendMessage("&8 ------------------------------");
+        }
+    }
+
+    private void registerCommand(Command command) {
+        SimplePluginManager pluginManager = (SimplePluginManager) this.getServer().getPluginManager();
+
+        try {
+            Field field = SimplePluginManager.class.getDeclaredField("commandMap");
+
+            field.setAccessible(true);
+
+            CommandMap commandMap = (CommandMap) field.get(pluginManager);
+
+            commandMap.register(command.getName(), command);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 }

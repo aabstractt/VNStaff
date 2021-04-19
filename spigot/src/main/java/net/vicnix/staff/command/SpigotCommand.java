@@ -5,27 +5,19 @@ import net.vicnix.staff.session.Session;
 import net.vicnix.staff.session.SessionManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class SpigotCommand implements CommandExecutor {
+import java.util.List;
 
-    private final String apiCommand;
+public class SpigotCommand extends Command {
 
-    private final String spigotCommand;
-
-    public SpigotCommand(String apiCommand, String spigotCommand) {
-        this.apiCommand = apiCommand;
-
-        this.spigotCommand = spigotCommand;
+    public SpigotCommand(String name, String description, String usageMessage, List<String> aliases) {
+        super(name, description, usageMessage, aliases);
     }
 
-
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!command.getName().equals(this.spigotCommand)) return false;
-
+    public boolean execute(CommandSender sender, String label, String[] args) {
         if (!sender.hasPermission("vicnix.staff")) {
             sender.sendMessage(ChatColor.RED + "No tienes permisos para ejecutar este comando");
 
@@ -38,7 +30,7 @@ public class SpigotCommand implements CommandExecutor {
             session = SessionManager.getInstance().getSession(((Player) sender).getUniqueId());
         }
 
-        CommandManager.getInstance().executeCommand(session, this.apiCommand, args);
+        CommandManager.getInstance().executeCommand(session, this.getName(), args);
 
         return false;
     }
