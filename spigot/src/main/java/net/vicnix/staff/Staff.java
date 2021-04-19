@@ -10,6 +10,7 @@ import net.vicnix.staff.provider.MongoDBProvider;
 import net.vicnix.staff.provider.RedisProvider;
 import net.vicnix.staff.session.Session;
 import net.vicnix.staff.session.SessionManager;
+import net.vicnix.staff.utils.action.ConfigurationAction;
 import net.vicnix.staff.utils.action.FreezeAction;
 import net.vicnix.staff.utils.action.IAction;
 import net.vicnix.staff.utils.action.VanishAction;
@@ -27,6 +28,7 @@ public class Staff extends JavaPlugin {
     private final Map<String, IAction> actions = new HashMap<>() {{
         this.put("vanish", new VanishAction());
         this.put("freeze", new FreezeAction());
+        this.put("configuration", new ConfigurationAction());
     }};
 
     public static Staff getInstance() {
@@ -72,8 +74,14 @@ public class Staff extends JavaPlugin {
         return this.getConfig().getBoolean("dev-access", true);
     }
 
-    public IAction getAction(String name) {
-        return this.actions.getOrDefault(name, null);
+    public void executeAction(String actionName, Session... targets) {
+        IAction action = this.actions.get(actionName);
+
+        if (action == null) {
+            return;
+        }
+
+        action.execute(targets);
     }
 
     public void update() {

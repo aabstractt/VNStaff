@@ -6,7 +6,7 @@ import net.vicnix.staff.session.SessionStorage;
 public class VanishAction implements IAction {
 
     @Override
-    public void run(Session... targets) {
+    public void execute(Session... targets) {
         Session target = targets[0];
         SessionStorage sessionStorage = target.getSessionStorage();
 

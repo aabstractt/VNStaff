@@ -4,5 +4,5 @@ import net.vicnix.staff.session.Session;
 
 public interface IAction {
 
-    void run(Session... targets);
+    void execute(Session... targets);
 }

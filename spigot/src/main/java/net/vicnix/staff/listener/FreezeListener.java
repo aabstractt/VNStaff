@@ -17,7 +17,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 public class FreezeListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onHit(EntityDamageEvent ev) {
+    public void onEntityDamageEvent(EntityDamageEvent ev) {
         Entity entity = ev.getEntity();
 
         if (!(entity instanceof Player)) return;
@@ -32,7 +32,7 @@ public class FreezeListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onPlayerAttack(EntityDamageByEntityEvent ev) {
+    public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent ev) {
         Entity entity = ev.getEntity();
 
         if (!(entity instanceof Player)) return;
@@ -47,11 +47,12 @@ public class FreezeListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onMove(PlayerMoveEvent ev) {
+    public void onPlayerMoveEvent(PlayerMoveEvent ev) {
         Location to = ev.getTo();
         Location from = ev.getFrom();
 
-        if (to.getBlockX() == from.getBlockX() && to.getBlockY() == from.getBlockY() && to.getBlockZ() == from.getBlockZ()) return;
+        if (to.getBlockX() == from.getBlockX() && to.getBlockY() == from.getBlockY() && to.getBlockZ() == from.getBlockZ())
+            return;
 
         Session session = SessionManager.getInstance().getSession(ev.getPlayer().getUniqueId());
 
@@ -63,7 +64,7 @@ public class FreezeListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onBlockPlace(BlockPlaceEvent ev) {
+    public void onBlockPlaceEvent(BlockPlaceEvent ev) {
         Session session = SessionManager.getInstance().getSession(ev.getPlayer().getUniqueId());
 
         if (session == null) return;
@@ -74,7 +75,7 @@ public class FreezeListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onBlockBreak(BlockBreakEvent ev) {
+    public void onBlockBreakEvent(BlockBreakEvent ev) {
         Session session = SessionManager.getInstance().getSession(ev.getPlayer().getUniqueId());
 
         if (session == null) return;
