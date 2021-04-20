@@ -10,7 +10,9 @@ public class SpigotSession extends Session {
     private boolean freezed = false;
     private String whoFreezed = null;
 
-    public SpigotSession(SessionStorage sessionStorage) { super(sessionStorage); }
+    public SpigotSession(SessionStorage sessionStorage) {
+        super(sessionStorage);
+    }
 
     public void setDefaultAttributes() {
         if (!this.sessionStorage.isStaff()) return;
@@ -50,22 +52,22 @@ public class SpigotSession extends Session {
     }
 
     @Override
-    public Boolean isFreezed(){
+    public Boolean isFreezed() {
         return this.freezed;
     }
 
     @Override
-    public void setFreezed(Boolean state){
+    public void setFreezed(Boolean state) {
         this.freezed = state;
     }
 
     @Override
-    public void setWhoFreezed(String name){
+    public void setWhoFreezed(String name) {
         this.whoFreezed = name;
     }
 
     @Override
-    public String whoFreezed(){
+    public String whoFreezed() {
         return this.whoFreezed;
     }
 

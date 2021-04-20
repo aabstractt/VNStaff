@@ -64,7 +64,9 @@ public class Staff extends JavaPlugin {
 
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff listeners loaded"));
 
-        this.registerCommand(new SpigotCommand("vanish", "Staff command", "/vanish", new ArrayList<>(){{this.add("v");}}));
+        this.registerCommand(new SpigotCommand("vanish", "Staff command", "/vanish", new ArrayList<>() {{
+            this.add("v");
+        }}));
         this.registerCommand(new SpigotCommand("ltp", "Staff command", "/ltp", new ArrayList<>()));
         this.registerCommand(new SpigotCommand("freeze", "Staff command", "/freeze <player>", new ArrayList<>()));
         this.registerCommand(new SpigotRestartCommand());

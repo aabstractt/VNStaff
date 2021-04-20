@@ -14,11 +14,9 @@ public abstract class IAction {
     public abstract List<Class<?>> getEventsAllowed();
 
     public Boolean canExecute(Integer slot, Event event) {
-        Map<?, ?> contents = ItemUtils.getStaffContent(slot);
+        Map<?, ?> content = ItemUtils.getStaffContent(slot);
 
-        if (contents == null) return false;
-
-        if (!contents.get("action").equals(this.getClass().getSimpleName())) return false;
+        if (content == null || !content.get("action").equals(this.getClass().getSimpleName())) return false;
 
         for (Class<?> tClass : this.getEventsAllowed()) {
             if (!tClass.isAssignableFrom(event.getClass())) continue;

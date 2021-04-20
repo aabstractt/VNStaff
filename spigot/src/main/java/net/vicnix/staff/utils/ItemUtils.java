@@ -11,6 +11,7 @@ import java.util.Map;
 
 public class ItemUtils {
 
+    @SuppressWarnings("deprecation")
     public static ItemStack mapToItem(Map<String, Object> itemData) {
         if (!itemData.containsKey("id") || !itemData.containsKey("amount")) {
             return new ItemStack(Material.AIR);
