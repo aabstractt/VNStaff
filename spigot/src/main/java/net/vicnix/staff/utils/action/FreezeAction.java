@@ -1,8 +1,12 @@
 package net.vicnix.staff.utils.action;
 
 import net.vicnix.staff.session.Session;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
-public class FreezeAction implements IAction {
+import java.util.ArrayList;
+import java.util.List;
+
+public class FreezeAction extends IAction {
 
     @Override
     public void execute(Session... targets) {
@@ -19,5 +23,11 @@ public class FreezeAction implements IAction {
         }
 
         target.setWhoFreezed(target.isFreezed() ? session.getSessionStorage().getName() : null);
+    }
+
+    public List<Class<?>> getEventsAllowed() {
+        return new ArrayList<>() {{
+            this.add(PlayerInteractAtEntityEvent.class);
+        }};
     }
 }

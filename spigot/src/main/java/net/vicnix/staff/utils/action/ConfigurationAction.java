@@ -3,9 +3,13 @@ package net.vicnix.staff.utils.action;
 import net.vicnix.staff.session.Session;
 import net.vicnix.staff.session.SpigotSession;
 import org.bukkit.Bukkit;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
-public class ConfigurationAction implements IAction {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ConfigurationAction extends IAction {
 
     @Override
     public void execute(Session... targets) {
@@ -14,5 +18,12 @@ public class ConfigurationAction implements IAction {
         Inventory inventory = Bukkit.createInventory(null, 9, "Configuration menu");
 
         target.getInstance().openInventory(inventory);
+    }
+
+    @Override
+    public List<Class<?>> getEventsAllowed() {
+        return new ArrayList<>() {{
+            this.add(PlayerInteractEvent.class);
+        }};
     }
 }

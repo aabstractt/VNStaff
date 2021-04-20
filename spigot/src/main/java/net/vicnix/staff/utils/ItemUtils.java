@@ -47,4 +47,8 @@ public class ItemUtils {
 
         return contents;
     }
+
+    public static Map<?, ?> getStaffContent(Integer slot) {
+        return Staff.getInstance().getConfig().getMapList("staff-items").get(slot);
+    }
 }

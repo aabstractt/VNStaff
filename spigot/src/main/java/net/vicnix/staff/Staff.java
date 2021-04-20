@@ -24,16 +24,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Staff extends JavaPlugin {
 
     public static Staff instance;
 
-    private final Map<String, IAction> actions = new HashMap<>() {{
-        this.put("vanish", new VanishAction());
-        this.put("freeze", new FreezeAction());
-        this.put("configuration", new ConfigurationAction());
+    private final List<IAction> actions = new ArrayList<>() {{
+        this.add(new VanishAction());
+        this.add(new FreezeAction());
+        this.add(new ConfigurationAction());
     }};
 
     public static Staff getInstance() {
@@ -79,14 +80,8 @@ public class Staff extends JavaPlugin {
         return this.getConfig().getBoolean("dev-access", true);
     }
 
-    public void executeAction(String actionName, Session... targets) {
-        IAction action = this.actions.get(actionName);
-
-        if (action == null) {
-            return;
-        }
-
-        action.execute(targets);
+    public final List<IAction> getActions() {
+        return this.actions;
     }
 
     public void update() {

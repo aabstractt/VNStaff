@@ -5,6 +5,7 @@ import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
+import net.vicnix.staff.command.BungeeCommand;
 import net.vicnix.staff.listener.PlayerDisconnectListener;
 import net.vicnix.staff.listener.PostLoginListener;
 import net.vicnix.staff.provider.MongoDBProvider;
@@ -36,7 +37,7 @@ public class Staff extends Plugin {
             this.getProxy().getPluginManager().registerListener(this, new PostLoginListener());
             this.getProxy().getPluginManager().registerListener(this, new PlayerDisconnectListener());
 
-            //this.getProxy().getPluginManager().registerCommand(this, null);
+            this.getProxy().getPluginManager().registerCommand(this, new BungeeCommand("ltp"));
         } catch (IOException e) {
             e.printStackTrace();
         }

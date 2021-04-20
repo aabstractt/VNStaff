@@ -1,10 +1,10 @@
 package net.vicnix.staff.listener;
 
+import net.vicnix.staff.Staff;
 import net.vicnix.staff.session.Session;
 import net.vicnix.staff.session.SessionManager;
-import net.vicnix.staff.session.SessionStorage;
 import net.vicnix.staff.utils.ItemUtils;
-import org.bukkit.Material;
+import net.vicnix.staff.utils.action.IAction;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -33,10 +33,14 @@ public class InventoryListener implements Listener {
 
         if (session == null || !session.getSessionStorage().isStaff()) return;
 
+        for (IAction action : Staff.getInstance().getActions()) {
+            if (!action.canExecute(player.getInventory().getHeldItemSlot(), ev)) continue;
+
+            action.execute(session);
+        }
+
         for (ItemStack item : ItemUtils.getStaffContents(session.getSessionStorage().isVanished()).values()) {
             if (!item.getItemMeta().getDisplayName().equals(itemStack.getItemMeta().getDisplayName())) continue;
-
-            session.sendMessage("Action for " + item.getItemMeta().getDisplayName());
 
             ev.setCancelled(true);
         }
