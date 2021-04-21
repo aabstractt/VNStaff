@@ -1,9 +1,7 @@
 package net.vicnix.staff;
 
 import net.vicnix.staff.command.Command;
-import net.vicnix.staff.command.FreezeCommand;
 import net.vicnix.staff.command.LocateTeleportCommand;
-import net.vicnix.staff.command.VanishCommand;
 import net.vicnix.staff.session.Session;
 
 import java.util.HashMap;
@@ -14,13 +12,15 @@ public class CommandManager {
     private final static CommandManager instance = new CommandManager();
 
     private final Map<String, Command> commandMap = new HashMap<>() {{
-        put("vanish", new VanishCommand());
         put("ltp", new LocateTeleportCommand());
-        put("freeze", new FreezeCommand());
     }};
 
     public static CommandManager getInstance() {
         return instance;
+    }
+
+    public void register(String name, Command command) {
+        this.commandMap.put(name, command);
     }
 
     public void executeCommand(Session session, String label, String[] args) {

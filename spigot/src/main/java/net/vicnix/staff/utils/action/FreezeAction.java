@@ -1,6 +1,7 @@
 package net.vicnix.staff.utils.action;
 
 import net.vicnix.staff.session.Session;
+import net.vicnix.staff.session.SpigotSession;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class FreezeAction extends IAction {
     public void execute(Session... targets) {
         Session session = targets[0];
 
-        Session target = targets[1];
+        SpigotSession target = (SpigotSession) targets[1];
 
         target.setFreezed(!target.isFreezed());
 

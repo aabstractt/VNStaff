@@ -1,7 +1,7 @@
 package net.vicnix.staff.listener;
 
-import net.vicnix.staff.session.Session;
 import net.vicnix.staff.session.SessionManager;
+import net.vicnix.staff.session.SpigotSession;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -22,7 +22,7 @@ public class FreezeListener implements Listener {
 
         if (!(entity instanceof Player)) return;
 
-        Session session = SessionManager.getInstance().getSession(entity.getUniqueId());
+        SpigotSession session = (SpigotSession) SessionManager.getInstance().getSession(entity.getUniqueId());
 
         if (session == null) return;
 
@@ -37,7 +37,7 @@ public class FreezeListener implements Listener {
 
         if (!(entity instanceof Player)) return;
 
-        Session session = SessionManager.getInstance().getSession(entity.getUniqueId());
+        SpigotSession session = (SpigotSession) SessionManager.getInstance().getSession(entity.getUniqueId());
 
         if (session == null) return;
 
@@ -54,7 +54,7 @@ public class FreezeListener implements Listener {
         if (to.getBlockX() == from.getBlockX() && to.getBlockY() == from.getBlockY() && to.getBlockZ() == from.getBlockZ())
             return;
 
-        Session session = SessionManager.getInstance().getSession(ev.getPlayer().getUniqueId());
+        SpigotSession session = (SpigotSession) SessionManager.getInstance().getSession(ev.getPlayer().getUniqueId());
 
         if (session == null) return;
 
@@ -65,7 +65,7 @@ public class FreezeListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockPlaceEvent(BlockPlaceEvent ev) {
-        Session session = SessionManager.getInstance().getSession(ev.getPlayer().getUniqueId());
+        SpigotSession session = (SpigotSession) SessionManager.getInstance().getSession(ev.getPlayer().getUniqueId());
 
         if (session == null) return;
 
@@ -76,7 +76,7 @@ public class FreezeListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockBreakEvent(BlockBreakEvent ev) {
-        Session session = SessionManager.getInstance().getSession(ev.getPlayer().getUniqueId());
+        SpigotSession session = (SpigotSession) SessionManager.getInstance().getSession(ev.getPlayer().getUniqueId());
 
         if (session == null) return;
 

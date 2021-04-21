@@ -31,37 +31,4 @@ public class BungeeSession extends Session {
 
         this.getInstance().sendMessage(ChatColor.translateAlternateColorCodes('&', message));
     }
-
-    @Override
-    public void setDefaultAttributes() {
-
-    }
-
-    @Override
-    public void showPlayer(Session session) {
-
-    }
-
-    @Override
-    public void hidePlayer(Session session) {
-
-    }
-
-    @Override
-    public Boolean isFreezed() {
-        return null;
-    }
-
-    @Override
-    public void setFreezed(Boolean state) {
-
-    }
-
-    @Override
-    public void setWhoFreezed(String name) {}
-
-    @Override
-    public String whoFreezed() {
-        return null;
-    }
 }

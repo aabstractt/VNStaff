@@ -1,7 +1,9 @@
 package net.vicnix.staff;
 
+import net.vicnix.staff.command.FreezeCommand;
 import net.vicnix.staff.command.SpigotCommand;
 import net.vicnix.staff.command.SpigotRestartCommand;
+import net.vicnix.staff.command.VanishCommand;
 import net.vicnix.staff.listener.FreezeListener;
 import net.vicnix.staff.listener.InventoryListener;
 import net.vicnix.staff.listener.PlayerJoinListener;
@@ -10,6 +12,7 @@ import net.vicnix.staff.provider.MongoDBProvider;
 import net.vicnix.staff.provider.RedisProvider;
 import net.vicnix.staff.session.Session;
 import net.vicnix.staff.session.SessionManager;
+import net.vicnix.staff.session.SpigotSession;
 import net.vicnix.staff.utils.action.ConfigurationAction;
 import net.vicnix.staff.utils.action.FreezeAction;
 import net.vicnix.staff.utils.action.IAction;
@@ -64,11 +67,11 @@ public class Staff extends JavaPlugin {
 
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff listeners loaded"));
 
-        this.registerCommand(new SpigotCommand("vanish", "Staff command", "/vanish", new ArrayList<>() {{
+        this.registerCommand(new VanishCommand("vanish", "Staff command", "/vanish", new ArrayList<>() {{
             this.add("v");
         }}));
         this.registerCommand(new SpigotCommand("ltp", "Staff command", "/ltp", new ArrayList<>()));
-        this.registerCommand(new SpigotCommand("freeze", "Staff command", "/freeze <player>", new ArrayList<>()));
+        this.registerCommand(new FreezeCommand("freeze", "Staff command", "/freeze <player>", new ArrayList<>()));
         this.registerCommand(new SpigotRestartCommand());
 
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff commands loaded"));
@@ -86,12 +89,12 @@ public class Staff extends JavaPlugin {
 
     public void update() {
         for (Session session : SessionManager.getInstance().getSessions().values()) {
-            if (!session.isFreezed()) continue;
+            if (!((SpigotSession) session).isFreezed()) continue;
 
             session.sendMessage("&8 ------------------------------");
 
             session.sendMessage("&c            No te desconectes!");
-            session.sendMessage("&e Fuiste freezeado por " + session.whoFreezed());
+            session.sendMessage("&e Fuiste freezeado por " + ((SpigotSession) session).whoFreezed());
             session.sendMessage("&e Admites uso de &4 hacks &e o prefieres &6 ss");
 
             session.sendMessage("&8 ------------------------------");
@@ -109,6 +112,10 @@ public class Staff extends JavaPlugin {
             CommandMap commandMap = (CommandMap) field.get(pluginManager);
 
             commandMap.register(command.getName(), command);
+
+            if (!(command instanceof net.vicnix.staff.command.Command)) return;
+            
+            CommandManager.getInstance().register(command.getName(), (net.vicnix.staff.command.Command) command);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }

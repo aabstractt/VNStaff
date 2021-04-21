@@ -2,8 +2,15 @@ package net.vicnix.staff.command;
 
 import net.vicnix.staff.ConsoleUtils;
 import net.vicnix.staff.session.Session;
+import net.vicnix.staff.session.SpigotSession;
 
-public class FreezeCommand implements Command {
+import java.util.List;
+
+public class FreezeCommand extends SpigotCommand implements Command {
+
+    public FreezeCommand(String name, String description, String usageMessage, List<String> aliases) {
+        super(name, description, usageMessage, aliases);
+    }
 
     @Override
     public void execute(Session session, String[] args) {
@@ -19,7 +26,7 @@ public class FreezeCommand implements Command {
             return;
         }
 
-        Session target = ConsoleUtils.getInstance().getSessionPlayer(args[0]);
+        SpigotSession target = (SpigotSession) ConsoleUtils.getInstance().getSessionPlayer(args[0]);
 
         if (target == null) {
             session.sendMessage(String.format("&c%s no encontrado.", args[0]));

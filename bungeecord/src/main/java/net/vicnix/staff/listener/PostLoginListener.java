@@ -16,6 +16,8 @@ public class PostLoginListener implements Listener {
     public void onPostLoginEvent(PostLoginEvent ev) {
         ProxiedPlayer player = ev.getPlayer();
 
+        if (!player.hasPermission("vicnix.staff")) return;
+
         new Thread(() -> {
             if (!player.isConnected()) return;
 

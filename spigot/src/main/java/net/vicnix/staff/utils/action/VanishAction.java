@@ -12,15 +12,12 @@ public class VanishAction extends IAction {
     @Override
     public void execute(Session... targets) {
         Session target = targets[0];
-        SessionStorage sessionStorage = target.getSessionStorage();
 
-        if (!sessionStorage.isStaff()) {
-            sessionStorage.setStaff(true);
-        }
+        SessionStorage sessionStorage = target.getSessionStorage();
 
         sessionStorage.setVanished(!sessionStorage.isVanished());
 
-        target.setDefaultAttributes();
+        target.updateDefaultAttributes();
 
         target.sendMessage("&2Ahora eres &b" + (sessionStorage.isVanished() ? "invisible" : "visible") + "&2 para los demas jugadores.");
     }

@@ -16,6 +16,8 @@ public class PlayerJoinListener implements Listener {
     public void onPlayerJoinEvent(PlayerJoinEvent ev) {
         Player player = ev.getPlayer();
 
+        if (!player.hasPermission("vicnix.staff")) return;
+
         new Thread(() -> {
             if (!player.isOnline()) return;
 

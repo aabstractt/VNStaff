@@ -1,7 +1,7 @@
 package net.vicnix.staff.listener;
 
-import net.vicnix.staff.session.Session;
 import net.vicnix.staff.session.SessionManager;
+import net.vicnix.staff.session.SpigotSession;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -16,7 +16,7 @@ public class PlayerQuitListener implements Listener {
     public void onPlayerQuitEvent(PlayerQuitEvent ev) {
         Player player = ev.getPlayer();
 
-        Session session = SessionManager.getInstance().getSession(player.getUniqueId());
+        SpigotSession session = (SpigotSession) SessionManager.getInstance().getSession(player.getUniqueId());
 
         if(session.isFreezed()) {
             Bukkit.getServer().broadcast(ChatColor.translateAlternateColorCodes('&',"&6El jugador &4" + player.getName() + "&6 se desconectó en ss"), "vicnix.staff");

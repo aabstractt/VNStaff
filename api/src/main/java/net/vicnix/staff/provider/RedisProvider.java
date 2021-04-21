@@ -48,8 +48,6 @@ public class RedisProvider {
         Map<String, String> data = jedis.hgetAll("session:" + session.getSessionStorage().getUniqueId());
 
         if (data.isEmpty()) return;
-
-        session.updateStorage(data);
     }
 
     public void saveSessionStorage(UUID uuid, Map<String, String> data) {

@@ -10,31 +10,40 @@ public class SpigotSession extends Session {
     private boolean freezed = false;
     private String whoFreezed = null;
 
+    private Boolean beforeIsFlying = false;
+
     public SpigotSession(SessionStorage sessionStorage) {
         super(sessionStorage);
     }
 
+    @Override
     public void setDefaultAttributes() {
-        if (!this.sessionStorage.isStaff()) return;
+        Player instance = this.getInstance();
 
-        ItemUtils.getStaffContents(this.sessionStorage.isVanished()).forEach((slot, itemStack) -> this.getInstance().getInventory().setItem(slot, itemStack));
+        if (!this.sessionStorage.isVanished() && !this.sessionStorage.isStaff()) {
+            instance.setFlying(this.beforeIsFlying);
 
-        if (this.sessionStorage.isVanished()) {
-            Bukkit.getOnlinePlayers().forEach(player -> player.hidePlayer(this.getInstance()));
+            instance.setAllowFlight(this.beforeIsFlying);
+
+            return;
         }
 
-        for (Session session : SessionManager.getInstance().getSessions().values()) {
-            if (!session.getSessionStorage().isStaff()) continue;
+        this.beforeIsFlying = instance.isFlying();
 
-            if (session.getSessionStorage().canSeeStaff()) {
-                session.showPlayer(this);
-            }
+        instance.setFlying(true);
+        instance.setAllowFlight(true);
+    }
 
-            if (!session.getSessionStorage().isVanished()) continue;
+    @Override
+    public void updateDefaultAttributes() {
+        if (this.sessionStorage.isStaff()) {
+            ItemUtils.getStaffContents(this.sessionStorage.isVanished()).forEach((slot, itemStack) -> this.getInstance().getInventory().setItem(slot, itemStack));
+        }
 
-            if (!this.sessionStorage.canSeeStaff()) continue;
-
-            this.showPlayer(session);
+        if (this.sessionStorage.isVanished()) {
+            this.giveVanishAttributes();
+        } else {
+            this.removeVanishAttributes();
         }
     }
 
@@ -51,29 +60,63 @@ public class SpigotSession extends Session {
         instance.teleport(((SpigotSession) session).getInstance());
     }
 
-    @Override
-    public Boolean isFreezed() {
-        return this.freezed;
+    public void giveVanishAttributes() {
+        if (!this.sessionStorage.isVanished()) return;
+
+        Bukkit.getOnlinePlayers().forEach(player -> player.hidePlayer(this.getInstance()));
+
+        for (Session session : SessionManager.getInstance().getSessions().values()) {
+            if (!session.getSessionStorage().isStaff()) continue;
+
+            if (session.getSessionStorage().canSeeStaff()) {
+                ((SpigotSession) session).showPlayer(this);
+            }
+
+            if (!session.getSessionStorage().isVanished()) continue;
+
+            if (!this.sessionStorage.canSeeStaff()) continue;
+
+            this.showPlayer(session);
+        }
+
+        this.getInstance().spigot().setCollidesWithEntities(false);
     }
 
-    @Override
-    public void setFreezed(Boolean state) {
-        this.freezed = state;
-    }
+    public void removeVanishAttributes() {
+        if (this.sessionStorage.isVanished()) return;
 
-    @Override
-    public void setWhoFreezed(String name) {
-        this.whoFreezed = name;
-    }
+        Bukkit.getOnlinePlayers().forEach(player -> player.showPlayer(this.getInstance()));
 
-    @Override
-    public String whoFreezed() {
-        return this.whoFreezed;
+        for (Session session : SessionManager.getInstance().getSessions().values()) {
+            if (!session.getSessionStorage().isStaff()) continue;
+
+            if (!session.getSessionStorage().isVanished()) continue;
+
+            this.hidePlayer(session);
+        }
+
+        this.getInstance().spigot().setCollidesWithEntities(true);
     }
 
     @Override
     public void sendMessage(String message) {
         this.getInstance().sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+    }
+
+    public Boolean isFreezed() {
+        return this.freezed;
+    }
+
+    public void setFreezed(Boolean state) {
+        this.freezed = state;
+    }
+
+    public void setWhoFreezed(String name) {
+        this.whoFreezed = name;
+    }
+
+    public String whoFreezed() {
+        return this.whoFreezed;
     }
 
     public void showPlayer(Session session) {

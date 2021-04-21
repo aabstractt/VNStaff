@@ -1,8 +1,5 @@
 package net.vicnix.staff.session;
 
-import net.vicnix.staff.provider.RedisProvider;
-
-import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Session {
@@ -21,29 +18,13 @@ public abstract class Session {
 
     public abstract void sendMessage(String message);
 
-    public abstract void setDefaultAttributes();
-
-    public abstract void showPlayer(Session session);
-
-    public abstract void hidePlayer(Session session);
-
-    public abstract Boolean isFreezed();
-
-    public abstract void setFreezed(Boolean state);
-
-    public abstract void setWhoFreezed(String name);
-
-    public abstract String whoFreezed();
-
-    public void updateStorage(Map<String, String> data) {
-        this.sessionStorage.setVanished(Boolean.valueOf(data.get("vanished")));
-
-        this.sessionStorage.setCanSeeStaff(Boolean.valueOf(data.get("canSeeStaff")));
-
-        this.setFreezed(Boolean.valueOf(data.get("freezed")));
+    public void setDefaultAttributes() {
     }
 
-    public void syncRedis() {
+    public void updateDefaultAttributes() {
+    }
+
+    /*public void syncRedis() {
         RedisProvider.getInstance().saveSessionStorage(this.sessionStorage.getUniqueId(), new HashMap<>() {{
             this.put("name", sessionStorage.getName());
             this.put("vanished", String.valueOf(sessionStorage.isVanished()));
@@ -51,5 +32,5 @@ public abstract class Session {
             this.put("freezed", String.valueOf(isFreezed()));
             this.put("whoFreezed", whoFreezed());
         }});
-    }
+    }*/
 }
