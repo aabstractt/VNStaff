@@ -4,10 +4,7 @@ import net.vicnix.staff.command.FreezeCommand;
 import net.vicnix.staff.command.SpigotCommand;
 import net.vicnix.staff.command.SpigotRestartCommand;
 import net.vicnix.staff.command.VanishCommand;
-import net.vicnix.staff.listener.FreezeListener;
-import net.vicnix.staff.listener.InventoryListener;
-import net.vicnix.staff.listener.PlayerJoinListener;
-import net.vicnix.staff.listener.PlayerQuitListener;
+import net.vicnix.staff.listener.*;
 import net.vicnix.staff.provider.MongoDBProvider;
 import net.vicnix.staff.provider.RedisProvider;
 import net.vicnix.staff.session.Session;
@@ -60,13 +57,6 @@ public class Staff extends JavaPlugin {
 
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff mongodb loaded"));
 
-        this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
-        this.getServer().getPluginManager().registerEvents(new FreezeListener(), this);
-        this.getServer().getPluginManager().registerEvents(new InventoryListener(), this);
-
-        this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff listeners loaded"));
-
         this.registerCommand(new VanishCommand("vanish", "Staff command", "/vanish", new ArrayList<>() {{
             this.add("v");
         }}));
@@ -75,6 +65,17 @@ public class Staff extends JavaPlugin {
         this.registerCommand(new SpigotRestartCommand());
 
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff commands loaded"));
+
+        this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
+        this.getServer().getPluginManager().registerEvents(new EntityDamageListener(), this);
+        this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerItemListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerMoveListener(), this);
+        this.getServer().getPluginManager().registerEvents(new BlockListener(), this);
+
+        this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff listeners loaded"));
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(this, this::update, 100);
     }
@@ -114,7 +115,7 @@ public class Staff extends JavaPlugin {
             commandMap.register(command.getName(), command);
 
             if (!(command instanceof net.vicnix.staff.command.Command)) return;
-            
+
             CommandManager.getInstance().register(command.getName(), (net.vicnix.staff.command.Command) command);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
