@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ConfigurationAction extends IAction {
@@ -22,8 +22,6 @@ public class ConfigurationAction extends IAction {
 
     @Override
     public List<Class<?>> getEventsAllowed() {
-        return new ArrayList<>() {{
-            this.add(PlayerInteractEvent.class);
-        }};
+        return Collections.singletonList(PlayerInteractEvent.class);
     }
 }

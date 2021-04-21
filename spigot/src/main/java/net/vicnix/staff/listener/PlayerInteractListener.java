@@ -11,7 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -47,7 +47,7 @@ public class PlayerInteractListener implements Listener {
     }
 
     @EventHandler (priority = EventPriority.NORMAL)
-    public void onPlayerInteractAtEntityEvent(PlayerInteractAtEntityEvent ev){
+    public void onPlayerInteractAtEntityEvent(PlayerInteractEntityEvent ev){
         Player player = ev.getPlayer();
 
         Session session = SessionManager.getInstance().getSession(player.getUniqueId());

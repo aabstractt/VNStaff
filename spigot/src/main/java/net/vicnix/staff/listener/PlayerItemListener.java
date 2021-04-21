@@ -40,8 +40,8 @@ public class PlayerItemListener implements Listener {
 
         Session session = SessionManager.getInstance().getSession(player.getUniqueId());
 
-        if (session == null || !session.getSessionStorage().isStaff()) return;
+        if (session == null || !session.getSessionStorage().isVanished()) return;
 
-        if (session.getSessionStorage().isVanished()) ev.setCancelled(true);
+        ev.setCancelled(true);
     }
 }

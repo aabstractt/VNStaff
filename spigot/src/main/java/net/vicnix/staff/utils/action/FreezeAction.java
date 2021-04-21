@@ -2,9 +2,9 @@ package net.vicnix.staff.utils.action;
 
 import net.vicnix.staff.session.Session;
 import net.vicnix.staff.session.SpigotSession;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FreezeAction extends IAction {
@@ -27,8 +27,6 @@ public class FreezeAction extends IAction {
     }
 
     public List<Class<?>> getEventsAllowed() {
-        return new ArrayList<>() {{
-            this.add(PlayerInteractAtEntityEvent.class);
-        }};
+        return Collections.singletonList(PlayerInteractEntityEvent.class);
     }
 }

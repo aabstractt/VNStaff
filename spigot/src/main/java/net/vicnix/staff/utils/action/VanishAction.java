@@ -4,7 +4,7 @@ import net.vicnix.staff.session.Session;
 import net.vicnix.staff.session.SessionStorage;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class VanishAction extends IAction {
@@ -24,8 +24,6 @@ public class VanishAction extends IAction {
 
     @Override
     public List<Class<?>> getEventsAllowed() {
-        return new ArrayList<>() {{
-            this.add(PlayerInteractEvent.class);
-        }};
+        return Collections.singletonList(PlayerInteractEvent.class);
     }
 }

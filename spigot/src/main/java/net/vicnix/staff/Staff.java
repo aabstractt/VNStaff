@@ -20,6 +20,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Staff extends JavaPlugin {
@@ -54,12 +55,8 @@ public class Staff extends JavaPlugin {
 
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff mongodb loaded"));
 
-        this.registerCommand(new VanishCommand("vanish", "Staff command", "/vanish", new ArrayList<>() {{
-            this.add("v");
-        }}));
-        this.registerCommand(new StaffCommand("staff", "Staff command", "/staff", new ArrayList<>() {{
-            this.add("mod");
-        }}));
+        this.registerCommand(new VanishCommand("vanish", "Staff command", "/vanish", Collections.singletonList("v")));
+        this.registerCommand(new StaffCommand("staff", "Staff command", "/staff", Collections.singletonList("mod")));
         this.registerCommand(new SpigotCommand("ltp", "Staff command", "/ltp"));
         this.registerCommand(new FreezeCommand("freeze", "Staff command", "/freeze <player>"));
         this.registerCommand(new SpigotRestartCommand());

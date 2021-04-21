@@ -2,6 +2,8 @@ package net.vicnix.staff.listener;
 
 import net.vicnix.staff.Staff;
 import net.vicnix.staff.event.SessionCreateEvent;
+import net.vicnix.staff.session.Session;
+import net.vicnix.staff.session.SessionManager;
 import net.vicnix.staff.session.SpigotSession;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -18,6 +20,12 @@ public class SessionCreateListener implements Listener {
             session.setDefaultAttributes();
 
             session.updateFlyingAttribute();
+
+            for (Session s : SessionManager.getInstance().getSessions().values()) {
+                if (s.getSessionStorage().isStaff() || !s.getSessionStorage().isVanished()) continue;
+
+                session.hidePlayer(s);
+            }
         });
     }
 }

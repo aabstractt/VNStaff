@@ -8,13 +8,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SpigotCommand extends Command {
 
     public SpigotCommand(String name, String description, String usageMessage) {
-        this(name, description, usageMessage, new ArrayList<>());
+        this(name, description, usageMessage, List.of());
     }
 
     public SpigotCommand(String name, String description, String usageMessage, List<String> aliases) {

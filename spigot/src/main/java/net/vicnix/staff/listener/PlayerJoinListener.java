@@ -18,12 +18,14 @@ public class PlayerJoinListener implements Listener {
     public void onPlayerJoinEvent(PlayerJoinEvent ev) {
         Player player = ev.getPlayer();
 
-        if (!player.hasPermission("vicnix.staff")) return;
-
         Bukkit.getScheduler().runTaskAsynchronously(Staff.getInstance(), () -> {
             if (!player.isOnline()) return;
 
-            SessionStorage sessionStorage = MongoDBProvider.getInstance().loadSessionStorage(player.getName(), player.getUniqueId());
+            SessionStorage sessionStorage = null;
+
+            if (player.hasPermission("vicnix.staff")) {
+                sessionStorage = MongoDBProvider.getInstance().loadSessionStorage(player.getName(), player.getUniqueId());
+            }
 
             if (sessionStorage == null) {
                 sessionStorage = new SessionStorage(player.getName(), player.getUniqueId());

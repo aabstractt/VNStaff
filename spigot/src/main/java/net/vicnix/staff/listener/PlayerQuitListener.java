@@ -12,14 +12,16 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerQuitListener implements Listener {
 
-    @EventHandler (priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerQuitEvent(PlayerQuitEvent ev) {
         Player player = ev.getPlayer();
 
         SpigotSession session = (SpigotSession) SessionManager.getInstance().getSession(player.getUniqueId());
 
-        if(session.isFreezed()) {
-            Bukkit.getServer().broadcast(ChatColor.translateAlternateColorCodes('&',"&6El jugador &4" + player.getName() + "&6 se desconectó en ss"), "vicnix.staff");
+        if (session == null) return;
+
+        if (session.isFreezed()) {
+            Bukkit.getServer().broadcast(ChatColor.translateAlternateColorCodes('&', "&6El jugador &4" + player.getName() + "&6 se desconectó en ss"), "vicnix.staff");
         }
 
         SessionManager.getInstance().closeSession(player.getUniqueId());
