@@ -16,6 +16,8 @@ public abstract class ConsoleUtils {
         instance = consoleUtils;
     }
 
+    public abstract void createSession(Session session);
+
     public abstract void sendMessage(String message);
 
     public abstract Session getSessionPlayer(String name);

@@ -6,9 +6,9 @@ import net.vicnix.staff.session.SpigotSession;
 
 import java.util.List;
 
-public class VanishCommand extends SpigotCommand implements Command {
+public class StaffCommand extends SpigotCommand implements Command {
 
-    public VanishCommand(String name, String description, String usageMessage, List<String> aliases) {
+    public StaffCommand(String name, String description, String usageMessage, List<String> aliases) {
         super(name, description, usageMessage, aliases);
     }
 
@@ -16,11 +16,11 @@ public class VanishCommand extends SpigotCommand implements Command {
     public void execute(Session session, String[] args) {
         SessionStorage sessionStorage = session.getSessionStorage();
 
-        sessionStorage.setVanished(!sessionStorage.isVanished());
+        sessionStorage.setStaff(!sessionStorage.isStaff());
 
-        session.setDefaultAttributes();
+        ((SpigotSession) session).setDefaultAttributes(true);
         ((SpigotSession) session).updateFlyingAttribute();
 
-        session.sendMessage("&2Ahora eres &b" + (sessionStorage.isVanished() ? "invisible" : "visible") + "&2 para los demas jugadores.");
+        session.sendMessage("&2Te has " + (sessionStorage.isStaff() ? "&bactivado" : "&cdesactivado") + "&2 el staffmode.");
     }
 }

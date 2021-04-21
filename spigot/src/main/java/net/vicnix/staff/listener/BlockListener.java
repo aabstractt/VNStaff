@@ -21,9 +21,11 @@ public class BlockListener implements Listener {
 
         SpigotSession session = (SpigotSession) SessionManager.getInstance().getSession(player.getUniqueId());
 
-        if (session == null || !session.getSessionStorage().isStaff()) return;
+        if (session == null) return;
 
         if (session.isFreezed()) ev.setCancelled(true);
+
+        if (!session.getSessionStorage().isStaff()) return;
 
         ItemStack block = ev.getItemInHand();
 
@@ -33,6 +35,8 @@ public class BlockListener implements Listener {
             if (!item.getItemMeta().getDisplayName().equals(block.getItemMeta().getDisplayName())) continue;
 
             ev.setCancelled(true);
+
+            player.getInventory().setItemInHand(block);
 
             return;
         }

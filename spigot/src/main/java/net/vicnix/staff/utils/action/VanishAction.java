@@ -17,7 +17,7 @@ public class VanishAction extends IAction {
 
         sessionStorage.setVanished(!sessionStorage.isVanished());
 
-        target.updateDefaultAttributes();
+        target.setDefaultAttributes();
 
         target.sendMessage("&2Ahora eres &b" + (sessionStorage.isVanished() ? "invisible" : "visible") + "&2 para los demas jugadores.");
     }

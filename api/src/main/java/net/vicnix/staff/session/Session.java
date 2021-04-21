@@ -21,9 +21,6 @@ public abstract class Session {
     public void setDefaultAttributes() {
     }
 
-    public void updateDefaultAttributes() {
-    }
-
     /*public void syncRedis() {
         RedisProvider.getInstance().saveSessionStorage(this.sessionStorage.getUniqueId(), new HashMap<>() {{
             this.put("name", sessionStorage.getName());

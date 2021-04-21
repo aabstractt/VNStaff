@@ -50,10 +50,12 @@ public class ItemUtils {
     }
 
     public static Map<?, ?> getStaffContent(Integer slot) {
-        try {
-            return Staff.getInstance().getConfig().getMapList("staff-items").get(slot);
-        } catch (IndexOutOfBoundsException exception) {
-            return null;
+        for (Map<?, ?> itemData : Staff.getInstance().getConfig().getMapList("staff-items")) {
+            if (itemData.get("slot") != slot) continue;
+
+            return itemData;
         }
+
+        return null;
     }
 }

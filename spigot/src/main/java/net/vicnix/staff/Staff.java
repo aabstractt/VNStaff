@@ -1,9 +1,6 @@
 package net.vicnix.staff;
 
-import net.vicnix.staff.command.FreezeCommand;
-import net.vicnix.staff.command.SpigotCommand;
-import net.vicnix.staff.command.SpigotRestartCommand;
-import net.vicnix.staff.command.VanishCommand;
+import net.vicnix.staff.command.*;
 import net.vicnix.staff.listener.*;
 import net.vicnix.staff.provider.MongoDBProvider;
 import net.vicnix.staff.provider.RedisProvider;
@@ -60,24 +57,28 @@ public class Staff extends JavaPlugin {
         this.registerCommand(new VanishCommand("vanish", "Staff command", "/vanish", new ArrayList<>() {{
             this.add("v");
         }}));
-        this.registerCommand(new SpigotCommand("ltp", "Staff command", "/ltp", new ArrayList<>()));
-        this.registerCommand(new FreezeCommand("freeze", "Staff command", "/freeze <player>", new ArrayList<>()));
+        this.registerCommand(new StaffCommand("staff", "Staff command", "/staff", new ArrayList<>() {{
+            this.add("mod");
+        }}));
+        this.registerCommand(new SpigotCommand("ltp", "Staff command", "/ltp"));
+        this.registerCommand(new FreezeCommand("freeze", "Staff command", "/freeze <player>"));
         this.registerCommand(new SpigotRestartCommand());
 
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff commands loaded"));
 
-        this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
-        this.getServer().getPluginManager().registerEvents(new EntityDamageListener(), this);
+        this.getServer().getPluginManager().registerEvents(new SessionCreateListener(), this);
         this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
+        this.getServer().getPluginManager().registerEvents(new EntityDamageListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerItemListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerMoveListener(), this);
         this.getServer().getPluginManager().registerEvents(new BlockListener(), this);
 
         this.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lVNStaff listeners loaded"));
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(this, this::update, 100);
+        Bukkit.getScheduler().runTaskTimer(this, this::update, 20, 100);
     }
 
     public Boolean canDevAccess() {
@@ -92,13 +93,13 @@ public class Staff extends JavaPlugin {
         for (Session session : SessionManager.getInstance().getSessions().values()) {
             if (!((SpigotSession) session).isFreezed()) continue;
 
-            session.sendMessage("&8 ------------------------------");
+            session.sendMessage("&8&m ------------------------------");
 
             session.sendMessage("&c            No te desconectes!");
-            session.sendMessage("&e Fuiste freezeado por " + ((SpigotSession) session).whoFreezed());
-            session.sendMessage("&e Admites uso de &4 hacks &e o prefieres &6 ss");
+            session.sendMessage("&e Fuiste freezeado por &a" + ((SpigotSession) session).whoFreezed());
+            session.sendMessage("&e Admites uso de &4hacks &eo prefieres &6ss");
 
-            session.sendMessage("&8 ------------------------------");
+            session.sendMessage("&8&m ------------------------------");
         }
     }
 

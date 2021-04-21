@@ -5,6 +5,7 @@ import net.vicnix.staff.session.Session;
 import net.vicnix.staff.session.SessionManager;
 import net.vicnix.staff.utils.ItemUtils;
 import net.vicnix.staff.utils.action.IAction;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftInventoryPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,8 +31,10 @@ public class PlayerInteractListener implements Listener {
 
         if (session == null || !session.getSessionStorage().isStaff()) return;
 
+        CraftInventoryPlayer inventoryPlayer = (CraftInventoryPlayer) player.getInventory();
+
         for (IAction action : Staff.getInstance().getActions()) {
-            if (!action.canExecute(player.getInventory().getHeldItemSlot(), ev)) continue;
+            if (!action.canExecute(inventoryPlayer.getInventory().itemInHandIndex, ev)) continue;
 
             action.execute(session);
         }
@@ -59,8 +62,10 @@ public class PlayerInteractListener implements Listener {
 
         if(target.getSessionStorage().isStaff()) return;
 
+        CraftInventoryPlayer inventoryPlayer = (CraftInventoryPlayer) player.getInventory();
+
         for (IAction action : Staff.getInstance().getActions()) {
-            if (!action.canExecute(player.getInventory().getHeldItemSlot(), ev)) continue;
+            if (!action.canExecute(inventoryPlayer.getInventory().itemInHandIndex, ev)) continue;
 
             action.execute(session, target);
         }

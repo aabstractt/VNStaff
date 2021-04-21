@@ -9,6 +9,16 @@ import net.vicnix.staff.session.SessionManager;
 public class BungeeConsoleUtils extends ConsoleUtils {
 
     @Override
+    public String getServerName() {
+        return "Bungeecord";
+    }
+
+    @Override
+    public void createSession(Session session) {
+
+    }
+
+    @Override
     public void sendMessage(String message) {
         ProxyServer.getInstance().getLogger().info(ChatColor.translateAlternateColorCodes('&', message));
     }

@@ -4,12 +4,10 @@ import net.vicnix.staff.ConsoleUtils;
 import net.vicnix.staff.session.Session;
 import net.vicnix.staff.session.SpigotSession;
 
-import java.util.List;
-
 public class FreezeCommand extends SpigotCommand implements Command {
 
-    public FreezeCommand(String name, String description, String usageMessage, List<String> aliases) {
-        super(name, description, usageMessage, aliases);
+    public FreezeCommand(String name, String description, String usageMessage) {
+        super(name, description, usageMessage);
     }
 
     @Override
@@ -37,9 +35,9 @@ public class FreezeCommand extends SpigotCommand implements Command {
         target.setFreezed(!target.isFreezed());
 
         if (!target.isFreezed()) {
-            target.sendMessage("&8------------------------------");
-            target.sendMessage("&a Fuiste descongelado por " + target.whoFreezed());
-            target.sendMessage("&8------------------------------");
+            target.sendMessage("&8&m ------------------------------");
+            target.sendMessage("&a Fuiste descongelado por &c" + target.whoFreezed());
+            target.sendMessage("&8&m ------------------------------");
         }
 
         target.setWhoFreezed(target.isFreezed() ? session.getSessionStorage().getName() : null);

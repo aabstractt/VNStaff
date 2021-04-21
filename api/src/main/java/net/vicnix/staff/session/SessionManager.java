@@ -1,5 +1,6 @@
 package net.vicnix.staff.session;
 
+import net.vicnix.staff.ConsoleUtils;
 import net.vicnix.staff.provider.MongoDBProvider;
 
 import java.util.UUID;
@@ -18,7 +19,7 @@ public class SessionManager {
     public void createSession(Session session) {
         this.sessionConcurrentHashMap.put(session.getSessionStorage().getUniqueId(), session);
 
-        session.setDefaultAttributes();
+        ConsoleUtils.getInstance().createSession(session);
     }
 
     public void closeSession(UUID uuid) {

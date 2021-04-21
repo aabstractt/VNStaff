@@ -1,7 +1,9 @@
 package net.vicnix.staff.listener;
 
+import net.vicnix.staff.Staff;
 import net.vicnix.staff.provider.MongoDBProvider;
 import net.vicnix.staff.session.SpigotSession;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,7 +20,7 @@ public class PlayerJoinListener implements Listener {
 
         if (!player.hasPermission("vicnix.staff")) return;
 
-        new Thread(() -> {
+        Bukkit.getScheduler().runTaskAsynchronously(Staff.getInstance(), () -> {
             if (!player.isOnline()) return;
 
             SessionStorage sessionStorage = MongoDBProvider.getInstance().loadSessionStorage(player.getName(), player.getUniqueId());
@@ -28,6 +30,6 @@ public class PlayerJoinListener implements Listener {
             }
 
             SessionManager.getInstance().createSession(new SpigotSession(sessionStorage));
-        }).start();
+        });
     }
 }

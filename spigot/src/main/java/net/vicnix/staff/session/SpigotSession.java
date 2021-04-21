@@ -18,6 +18,22 @@ public class SpigotSession extends Session {
 
     @Override
     public void setDefaultAttributes() {
+        this.setDefaultAttributes(false);
+    }
+
+    public void setDefaultAttributes(Boolean force) {
+        if (this.sessionStorage.isStaff()) {
+            ItemUtils.getStaffContents(this.sessionStorage.isVanished()).forEach((slot, itemStack) -> this.getInstance().getInventory().setItem(slot, itemStack));
+        }
+
+        if (this.sessionStorage.isVanished() && !force) {
+            this.giveVanishAttributes();
+        } else {
+            this.removeVanishAttributes();
+        }
+    }
+
+    public void updateFlyingAttribute() {
         Player instance = this.getInstance();
 
         if (!this.sessionStorage.isVanished() && !this.sessionStorage.isStaff()) {
@@ -30,21 +46,8 @@ public class SpigotSession extends Session {
 
         this.beforeIsFlying = instance.isFlying();
 
-        instance.setFlying(true);
         instance.setAllowFlight(true);
-    }
-
-    @Override
-    public void updateDefaultAttributes() {
-        if (this.sessionStorage.isStaff()) {
-            ItemUtils.getStaffContents(this.sessionStorage.isVanished()).forEach((slot, itemStack) -> this.getInstance().getInventory().setItem(slot, itemStack));
-        }
-
-        if (this.sessionStorage.isVanished()) {
-            this.giveVanishAttributes();
-        } else {
-            this.removeVanishAttributes();
-        }
+        instance.setFlying(true);
     }
 
     public Player getInstance() {
