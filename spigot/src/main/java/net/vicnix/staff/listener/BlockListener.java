@@ -48,8 +48,6 @@ public class BlockListener implements Listener {
 
         if (session == null) return;
 
-        if (!session.isFreezed()) return;
-
-        ev.setCancelled(true);
+        if (!session.isFreezed())  ev.setCancelled(true);
     }
 }

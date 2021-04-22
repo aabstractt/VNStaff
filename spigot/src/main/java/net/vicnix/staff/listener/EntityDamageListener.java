@@ -22,9 +22,7 @@ public class EntityDamageListener implements Listener {
 
         if (session == null) return;
 
-        if (!session.isFreezed()) return;
-
-        ev.setCancelled(true);
+        if (session.isFreezed() || session.getSessionStorage().isStaff())  ev.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -37,8 +35,6 @@ public class EntityDamageListener implements Listener {
 
         if (session == null) return;
 
-        if (!session.isFreezed()) return;
-
-        ev.setCancelled(true);
+        if (session.isFreezed()) ev.setCancelled(true);
     }
 }
